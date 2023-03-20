@@ -27,6 +27,17 @@ public class Event {
     @Column(name = "date")
     private String date;
 
+    @Column(name = "uid")
+    private int uid;
+
+    public Event(String name, String description,
+            String date, int uid) {
+        this.eventName = name;
+        this.eventDescription = description;
+        this.date = date;
+        this.uid = uid;
+    }
+
     public int getId() {
         return this.id;
     }
@@ -57,6 +68,10 @@ public class Event {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getUID() {
+        return this.uid;
     }
 
 }

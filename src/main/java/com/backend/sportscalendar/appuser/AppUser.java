@@ -1,70 +1,72 @@
 package com.backend.sportscalendar.appuser;
 
-import java.util.Collection;
+import java.util.List;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class AppUser implements UserDetails {
+import com.backend.sportscalendar.Event;
 
-    private Long id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
+@Entity
+public class AppUser {
+
+    @Id
+    @GeneratedValue
+    private int id;
+    private String username;
+    private String password;
     private String firstName;
     private String lastName;
-    private String email;
-    private String password;
-    @Enumerated(EnumType.STRING)
-    private AppUserRole appUserRole;
-    private Boolean locked = false;
-    private Boolean enabled = false;
+    private boolean isEnabled;
 
-    public AppUser(String firstName,
-            String lastName,
-            String email,
+    @Autowired
+    private List<Event> events;
+
+    public AppUser(
+            String username,
             String password,
-            AppUserRole appUserRole) {
+            String firstName,
+            String lastName) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.appUserRole = appUserRole;
     }
 
     public String getUsername() {
-        return "";
+        return this.username;
     }
 
-    public String getPassword() {
-        return "";
+    public void setUsername(String newName) {
+        this.username = newName;
+    }
+
+    private String getPassword() {
+        return "cannot return user password";
+    }
+
+    public void setPassword(String pw) {
+        this.password = pw;
     }
 
     public String getFirstName() {
-        return "";
+        return this.firstName;
+    }
+
+    public void setFirstName(String fN) {
+        this.firstName = fN;
     }
 
     public String getLastName() {
-        return "";
+        return this.lastName;
     }
 
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    public boolean isAccountNonLocked() {
-        return !locked;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAuthorities'");
+    public void setLastName(String lN) {
+        this.lastName = lN;
     }
 
 }
