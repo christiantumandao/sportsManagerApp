@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.backend.sportscalendar.Event;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,8 +24,8 @@ public class UserController {
 
     // get users by id
     @RequestMapping("/users/{id}")
-    public Event getEvent(@PathVariable int id) {
-        return userService.getEvent(id);
+    public AppUser getEvent(@PathVariable int id) {
+        return userService.getUser(id);
     }
 
     // create user

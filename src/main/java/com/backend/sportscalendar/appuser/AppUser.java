@@ -1,11 +1,5 @@
 package com.backend.sportscalendar.appuser;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.backend.sportscalendar.Event;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
