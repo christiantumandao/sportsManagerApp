@@ -19,10 +19,17 @@ public class UserService {
     @Autowired
     private EventRepository eventRepository;
 
-    public List<Event> getAllEvents() {
-        List<Event> events = new ArrayList<>();
-        eventRepository.findAll().forEach(events::add);
-        return events;
+    @Autowired
+    private UserRepository userRepository;
+
+    public void addUser(AppUser user) {
+        userRepository.save(user);
+    }
+
+    public List<AppUser> getAllUsers() {
+        List<AppUser> users = new ArrayList<>();
+        userRepository.findAll().forEach(users::add);
+        return users;
     }
 
     public Event getEvent(int id) {

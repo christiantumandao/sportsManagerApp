@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Event")
+@Table(name = "event")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Event {

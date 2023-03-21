@@ -6,35 +6,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.backend.sportscalendar.Event;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "user_table")
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppUser {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue
     private int id;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private boolean isEnabled;
 
-    @Autowired
-    private List<Event> events;
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
 
     public AppUser(
             String username,
             String password,
             String firstName,
             String lastName) {
-        this.id = id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
