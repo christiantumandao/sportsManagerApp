@@ -58,8 +58,8 @@ public class AppUser {
         this.username = newName;
     }
 
-    private String getPassword() {
-        return "cannot return user password";
+    public String getPassword() {
+        return this.password;
     }
 
     public void setPassword(String pw) {
