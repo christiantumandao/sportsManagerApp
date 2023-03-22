@@ -18,23 +18,54 @@ public class Event {
     @GeneratedValue
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "eventName")
     private String eventName;
 
-    @Column(name = "description")
-    private String eventDescription;
+    @Column(name = "trackedTimes")
+    private String trackedTimes;
 
-    @Column(name = "date")
+    @Column(name = "eventDate")
     private String date;
+
+    @Column(name = "home")
+    private String home;
+
+    @Column(name = "homeImg")
+    private String homeImg;
+
+    @Column(name = "away")
+    private String away;
+
+    @Column(name = "awayImg")
+    private String awayImg;
+
+    @Column(name = "stadium")
+    private String stadium;
+
+    @Column(name = "location")
+    private String location;
+
+    @Column(name = "eventTime")
+    private String time;
 
     @Column(name = "uid")
     private int uid;
 
-    public Event(String name, String description,
-            String date, int uid) {
+    // constructor
+    public Event(String name, String trackedTimes,
+            String date, String home, String homeImg,
+            String away, String awayImg, String stadium,
+            String location, String time, int uid) {
         this.eventName = name;
-        this.eventDescription = description;
+        this.trackedTimes = trackedTimes;
         this.date = date;
+        this.home = home;
+        this.homeImg = homeImg;
+        this.away = away;
+        this.awayImg = awayImg;
+        this.stadium = stadium;
+        this.location = location;
+        this.time = time;
         this.uid = uid;
     }
 
@@ -54,12 +85,12 @@ public class Event {
         this.eventName = name;
     }
 
-    public String getEventDescription() {
-        return this.eventDescription;
+    public String getTrackedTimes() {
+        return this.trackedTimes;
     }
 
-    public void setEventDescription(String eventDesc) {
-        this.eventDescription = eventDesc;
+    public void setTrackedTimes(String eventDesc) {
+        this.trackedTimes = eventDesc;
     }
 
     public String getDate() {
@@ -70,8 +101,68 @@ public class Event {
         this.date = date;
     }
 
+    public String getHome() {
+        return this.home;
+    }
+
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getHomeImg() {
+        return this.homeImg;
+    }
+
+    public void set(String homeImg) {
+        this.homeImg = homeImg;
+    }
+
+    public String getAway() {
+        return this.away;
+    }
+
+    public void setAway(String away) {
+        this.away = away;
+    }
+
+    public String getAwayImg() {
+        return this.awayImg;
+    }
+
+    public void setAwayImg(String awayImg) {
+        this.awayImg = awayImg;
+    }
+
+    public String getStadium() {
+        return this.stadium;
+    }
+
+    public void setStadium(String stadium) {
+        this.stadium = stadium;
+    }
+
+    public String getLocation() {
+        return this.location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getTime() {
+        return this.time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
     public int getUID() {
         return this.uid;
+    }
+
+    public void setUID(int uid) {
+        this.uid = uid;
     }
 
 }
