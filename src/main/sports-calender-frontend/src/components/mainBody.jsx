@@ -59,6 +59,7 @@ class MainBody extends Component {
        getter: "",
        findFutureGames: true, // display the "add game" button AND wanting to find upcoming games
        displayDeleteButton: false, // display the "delete game" button
+       displayScore: false,
 
        displayLoginStatus: true,    // display user is not logged in
        displayLogin: false,             // display login GUI
@@ -90,6 +91,7 @@ class MainBody extends Component {
                         deleteGame = {this.deleteGame}
                         displayAddButton= {this.state.findFutureGames} //button for adding games
                         displayDeleteButton= { this.state.displayDeleteButton }
+                        displayScore = {this.state.displayScore}
 
                         //booleans for having to display login/register pages
                         displayLoginStatus = {this.state.displayLoginStatus}
@@ -98,6 +100,7 @@ class MainBody extends Component {
                         displayInfo = { this.state.displayInfo }
                         displayProfileInfo = { this.state.displayProfileInfo }
                           userData = { this.state.userData }
+                          gameCount = { this.state.userGames.length}
 
 
                         //button handler
@@ -119,13 +122,18 @@ class MainBody extends Component {
 
         var newDisplay="";
         var newTabs = this.state.tabsToDisplay;
+
+        this.setState({displayScore: false});
+
         if (id ==="back") { 
           newTabs= this.state.defaultTabs;
           this.setState({
             displayProfileInfo: false, 
             displayInfo: false,
             displayLogin: false,
-            displayRegistration: false
+            displayRegistration: false,
+            displayDeleteButton: true,
+            displayAddButton: false
           })
 
           if (this.state.isLoggedIn===true) {
@@ -149,10 +157,12 @@ class MainBody extends Component {
         } 
         else if (id==="2") { //get find games options
           newTabs = this.state.findGamesTabs; 
+          this.setState({ findFutureGames: true});
         }  //find future games
 
         else if (id==="3") { //find past games
           this.setState({findFutureGames: false}); 
+          this.setState({ displayScore: true});
           newTabs = this.state.findGamesTabs;
         }
 
@@ -198,12 +208,23 @@ class MainBody extends Component {
           newTabs = this.state.leagueTabs; 
         }
 
+        // if clicked on a tab displaying a league
         else if (id==="premier" || id==="champions" || id==="bundesliga" || id==="serie-a" || id==="la-liga") { 
           this.getLeagueInfo(id); 
         }
+        // getting fixtures by clicking on a team
         else if ((typeof id)==='number') { 
-          this.setState({findFutureGames: false}); 
-          this.getFixturesByTeam(id, optData) 
+
+          this.setState({
+            findFutureGames: true,
+            displayDeleteButton: false,
+            displayLoginStatus: false,
+            displayLogin: false,
+            displayRegistration: false,
+            displayProfileInfo: false,
+            displayInfo: false
+          }, ()=> this.getFixturesByTeam(id) ); 
+          
         } //if clicked on a team, get fixtures for that team
 
 
@@ -310,8 +331,20 @@ class MainBody extends Component {
             console.error(error);
         });
 
-        if (this.state.getter==="by league") this.getFixturesByLeague(leagueId);
-        else if (this.state.getter==="by teams"){ this.getTeamsByLeague(leagueId); console.log("getting teams for league id ", 2);}
+        // gettings fixtures in league
+        if (this.state.getter==="by league") {
+          this.setState({
+            findFutureGames: true,
+            displayDeleteButton: false,
+            displayLoginStatus: false,
+            displayLogin: false,
+            displayRegistration: false,
+            displayProfileInfo: false,
+            displayInfo: false
+          }, this.getFixturesByLeague(leagueId)); 
+        } 
+        // getting teams in league
+        else if (this.state.getter==="by teams"){ this.getTeamsByLeague(leagueId) }
 
             
       }
@@ -356,19 +389,16 @@ class MainBody extends Component {
       }
 
     getFixturesByTeam = (teamId, teamName) => {
-        this.setState({
-          findFutureGames: true,
-          displayDeleteButton: false,
-          displayLoginStatus: false,
-          displayLogin: false,
-          displayRegistration: false,
-          displayProfileInfo: false,
-          displayInfo: false
-        }); 
-
+        
         var api_params;
-        if (this.state.findFutureGames===true) api_params = {team: teamId, season: '2022', next: '50'};
-        else  api_params=  {team: teamId, season: '2022', last: '50'};
+        if (this.state.findFutureGames===true) {
+          api_params = {team: teamId, season: '2022', next: '50'}; 
+          console.log("getting nEXT GAMES");
+        }
+        else  {
+          console.log("showing past");
+          api_params=  {team: teamId, season: '2022', last: '50'}
+        }
 
         const options = {
             method: 'GET',
@@ -414,15 +444,7 @@ class MainBody extends Component {
     }
 
       getFixturesByLeague = (leagueId) => {
-        this.setState({
-          findFutureGames: true,
-          displayDeleteButton: false,
-          displayLoginStatus: false,
-          displayLogin: false,
-          displayRegistration: false,
-          displayProfileInfo: false,
-          displayInfo: false
-        }); 
+        
 
         var api_params;
         if (this.state.findFutureGames===true) api_params = {league: leagueId, season: '2022', next: '50'};
@@ -469,12 +491,19 @@ class MainBody extends Component {
       }
 
       addGame = (event) => {
-        
+        let gameAdded = false;
+        this.state.userGames.forEach(userEvent => { 
+          if ( event.id === userEvent.id ) gameAdded=true;
+        })
 
-        if (this.state.isLoggedIn===false) {
+        if (gameAdded===true) {
+          alert("Game already added! ");
+        }
+
+        else if (this.state.isLoggedIn===false) {
           this.displayUserNotLoggedIn();
         }
-        else {
+        else { //adding game
           /*id
           xhome 
           xhomeImg

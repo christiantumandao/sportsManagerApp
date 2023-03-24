@@ -47,6 +47,7 @@ class EventTabs extends Component {
                             awayScore = {event.awayScore}
                             displayAddButton={this.props.displayAddButton}
                             displayDeleteButton= { this.props.displayDeleteButton }
+                            displayScore = { this.props.displayScore}
 
                             />
                         </div>
@@ -172,8 +173,7 @@ class EventTabs extends Component {
                         <h2>Profile Statistics</h2>
                         <div class="profile-statistics">
                             <div class="games-statistics profile-statistics-item">
-                                <div>Games Added</div>
-                                <div>Games Deleted</div>
+                                <div>Games Added: { this.props.gameCount}</div>
                             </div>
                             <div class="watched-statistics profile-statistics-item">
                                 <div>Total minutes watched</div>
@@ -187,11 +187,11 @@ class EventTabs extends Component {
                 {/** website info display */}
                 <div class= { this.getClasses("website-info")}>
                     <div class="app-summary">
-                        <h1>Sports Events Manager</h1>
+                        <h3>Sports Events Manager</h3>
                         <p>Is a web application that searches for future and past soccer/football games.</p>
                         <p>Given a user registers and logs in, will offer to schedule games and track watched portion(s) of games.</p>
                     </div>
-                    <h1>Leagues offered:</h1>
+                    <h3>Leagues offered:</h3>
                     <div class="leagues-offered">
                             <ul class="left-list">
                                 <li>Premier League</li>
@@ -204,7 +204,7 @@ class EventTabs extends Component {
                             </ul>
                     </div>
                     <div class="tech-stack-summary">
-                        <h1>Tech stack:</h1>
+                        <h3>Tech stack:</h3>
                         <ul>
                             <li>Frontend: 
                                 <ul>

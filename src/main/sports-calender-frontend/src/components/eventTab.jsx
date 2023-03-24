@@ -21,6 +21,8 @@ class EventTab extends Component {
     render() { 
         return (
             <React.Fragment>
+
+                    {/** 30% width */}
                     <div class="match-up flex-item-eventTab">
                         <div>
                             <img src={this.props.homeImg} class="home-img"/>
@@ -29,12 +31,11 @@ class EventTab extends Component {
                          <div>vs</div>  
                          <div>
                             <img src={this.props.awayImg} class="away-img"></img>
-                        {this.props.away}
-                            
-                         </div>
-                        
-                        
-                    </div>
+                             {this.props.away}
+                         </div>      
+                 </div>
+
+                    {/** 20% width */}
                     <div class={this.getClasses("addButton")}>
                         <button class='flex-item-eventTab'
                                         onClick={() => this.props.addGame({
@@ -52,7 +53,8 @@ class EventTab extends Component {
                                         })}>
                         Add game</button>
                     </div>
-
+                    
+                    {/** 30% width */}
                     <div class={this.getClasses("deleteButton")}>
                     <button class='flex-item-eventTab'
                                         onClick={() => this.props.deleteGame(
@@ -61,9 +63,32 @@ class EventTab extends Component {
                         Delete game</button>
                     </div>
 
+                                
                     <div class={this.getClasses("score")}>
                         <div>{this.props.homeScore}</div>
                         <div>{this.props.awayScore}</div>
+                    </div>
+
+                    <div class="tracker">
+                        <div class="tracker-bar">
+                            <p>[</p>
+                            <p class="notch-1">=</p>
+                            <p class="notch-2">=</p>
+                            <p class="notch-3">=</p>
+                            <p class="notch-4">=</p>
+                            <p class="notch-5">=</p>
+                            <p class="notch-6">=</p>
+                            <p class="notch-7">=</p>
+                            <p class="notch-8">=</p>
+                            <p class="notch-9">=</p>
+                            <p class="notch-10">=</p>
+                            <p >]</p>
+                        </div>
+                        <div class="tracker-btn-container">
+                            <button>Tracks</button>
+                        </div>
+
+
                     </div>
 
 
@@ -93,15 +118,15 @@ class EventTab extends Component {
 
     getClasses = (classType) => {
         if (classType==="addButton") {
-            if (this.props.displayAddButton === true) return "btn-container";
+            if (this.props.displayAddButton === true) return "add-btn-container";
             else return "display-none";
         }
         else if (classType=="deleteButton") {
-            if (this.props.displayDeleteButton ===true) return "btn-container btn-delete-container";
+            if (this.props.displayDeleteButton ===true) return "add-btn-container delete-btn-container";
             else return "display-none";
         }
         else if (classType==="score") {
-            if (this.props.displayButton===true) return "display-none";
+            if (this.props.displayScore===false) return "display-none";
             else return "fixture-score";
 
         }

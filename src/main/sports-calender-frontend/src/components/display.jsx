@@ -36,6 +36,7 @@ class Display extends Component {
                     deleteGame = {this.props.deleteGame}
                     displayAddButton = {this.props.displayAddButton}
                     displayDeleteButton= { this.props.displayDeleteButton }
+                    displayScore = { this.props.displayScore}
 
                     displayLoginStatus = {this.props.displayLoginStatus}
                     displayLogin = {this.props.displayLogin}
@@ -47,6 +48,8 @@ class Display extends Component {
                     displayInfo = { this.props.displayInfo }
                     displayProfileInfo = { this.props.displayProfileInfo }
                           userData = { this.props.userData }
+                          gameCount = {this.props.gameCount}
+
                     />
                 </div>
             </React.Fragment>
