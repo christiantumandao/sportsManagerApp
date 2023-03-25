@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useState } from 'react';
 import Display from './display';
 import Tabs from './tabs';
 import SearchBar from './searchBar';
@@ -6,6 +6,7 @@ import SearchBar from './searchBar';
 import axios from 'axios';
 
 class MainBody extends Component {
+
     state = {  
 
         tabsToDisplay: [
@@ -47,29 +48,42 @@ class MainBody extends Component {
             {id: "9", description: "Game 4"}
             ],
 
-        //header data for right display
-        displayHeaderData: {name: "Event Manager", region: "", season: "", subHeader:""},
-        defaultHeaderData: {name: "Event Manager", region: "", season: "", subHeader:""},
+      // User information ================================================================================
 
-        //tabs displayed on the right | is a list of objects w values:
-        //    {home, homeImg, away, awayImg, stadium, location, date, time}
-       rightDisplayTabs: [], // what is displayed
+      isLoggedIn: false,
+      userData: {firstName: "", lastName: "", id: "", }, //data is loaded-in in this.loadInUserData
+      userGames: [],  //loaded in in this.loadInUserData
+
+      // GUI variables
+      findingEventsByLeague: null,
+      findFutureEvents: false, 
+
+       // Flags for displayHeader ==========================================================================
+
+          // what is called to display
+       displayHeaderData: {topLeft: "Event Manager", topRight: "", bottomLeft: "", bottomRight: ""},
+       displayDefaultHeader: {topLeft: "EventManager", topRight: "", bottomLeft: "", bottomRight: ""},
+
+
+       // Flags for displayBody  ===========================================================================
+      
+       
+       displayType: "login-message-gui",
+       // login-message-gui
+       // login-gui
+       // registration-gui
+       
+       // your-games
+       // find-games
+       // find-past-games
+       // info
+       // info
+
+          
+       // Flags for EventsTabs 
+       rightDisplayTabs: [],
        defaultRightDisplayTabs: [],
-
-       getter: "",
-       findFutureGames: true, // display the "add game" button AND wanting to find upcoming games
-       displayDeleteButton: false, // display the "delete game" button
-       displayScore: false,
-
-       displayLoginStatus: true,    // display user is not logged in
-       displayLogin: false,             // display login GUI
-       displayRegistration: false,  // fidplsy registration GUI
-       displayProfileInfo: false,
-       displayInfo: false,
-
-       isLoggedIn: false,
-       userData: {firstName: "", lastName: "", id: "", }, //data is loaded-in in this.loadInUserData
-       userGames: []                                                       //loaded in in this.loadInUserData
+            
     } 
     render() { 
         return (
@@ -84,34 +98,28 @@ class MainBody extends Component {
 
                 <div class="flex-item-mainBody flex-item-mainBody-2 flex-container-display">
                     <Display 
-                        displayHeaderData={this.state.displayHeaderData}
 
+                        displayHeader={this.state.displayHeaderData}
+
+                        // rightTabs
                         fixtures={this.state.rightDisplayTabs}
+
+                        // function references
                         addGame = {this.addGame}
                         deleteGame = {this.deleteGame}
-                        displayAddButton= {this.state.findFutureGames} //button for adding games
-                        displayDeleteButton= { this.state.displayDeleteButton }
-                        displayScore = {this.state.displayScore}
-
-                        //booleans for having to display login/register pages
-                        displayLoginStatus = {this.state.displayLoginStatus}
-                        displayLogin = {this.state.displayLogin}
-                        displayRegistration = {this.state.displayRegistration}
-                        displayInfo = { this.state.displayInfo }
-                        displayProfileInfo = { this.state.displayProfileInfo }
-                          userData = { this.state.userData }
-                          gameCount = { this.state.userGames.length}
-
-
-                        //button handler
                         handleLoginRegistrationClick = {this.handleLoginRegistrationClick}
-
-                        //login/register button handler
                         handleRegistration = {this.handleRegistrationSubmit}
-                        handleLogin = {this.handleLoginSubmit}/>
+                        handleLogin = {this.handleLoginSubmit}
+
+                        // display body
+                        displayType = { this.state.displayType }
+                        findFutureEvents ={ this.state.findFutureEvents }
+                        
+                        //user data
+                        userData = { this.state.userData }
+                        gameCount = { this.state.userGames.length}
+                        isLoggedIn = { this.state.isLoggedIn }/>
                 </div>
-
-
             </React.Fragment>
 
 
@@ -120,131 +128,114 @@ class MainBody extends Component {
 
     handleTabClick = (id, optData) => {
 
-        var newDisplay="";
-        var newTabs = this.state.tabsToDisplay;
-
-        this.setState({displayScore: false});
-
-        if (id ==="back") { 
-          newTabs= this.state.defaultTabs;
+      // your games
+      if  (id==="1") {
+        if (this.state.isLoggedIn===true) {
           this.setState({
-            displayProfileInfo: false, 
-            displayInfo: false,
-            displayLogin: false,
-            displayRegistration: false,
-            displayDeleteButton: true,
-            displayAddButton: false
+            tabsToDisplay: this.state.defaultTabs,
           })
-
-          if (this.state.isLoggedIn===true) {
-            this.displayScheduledGames(); 
-          }
-          else {
-            this.displayUserNotLoggedIn();    
-          }
-        } 
-        else if (id === "1") {  //your scheduled games
-          if (this.state.isLoggedIn===false) {
-            this.displayUserNotLoggedIn();
-          }
+        }
+        else {
           this.setState({
-            displayDeleteButton: true,
-            findFutureGames: false,
-            rightDisplayTabs: this.state.userGames,
-            displayProfileInfo: false,
-            displayInfo: false
-          }); 
-        } 
-        else if (id==="2") { //get find games options
-          newTabs = this.state.findGamesTabs; 
-          this.setState({ findFutureGames: true});
-        }  //find future games
-
-        else if (id==="3") { //find past games
-          this.setState({findFutureGames: false}); 
-          this.setState({ displayScore: true});
-          newTabs = this.state.findGamesTabs;
+            tabsToDisplay: this.state.defaultTabs,
+            displayType: "login-message-gui",
+            displayHeaderData: {topLeft: "", topRight: "", bottomRight: "", bottomLeft: ""},
+          }) 
         }
+      }
 
-        else if ( id==="4") { //profile info
-            if (this.state.isLoggedIn===false) this.displayUserNotLoggedIn();
-            else {
-              this.setState({ 
-                displayProfileInfo: true,
-                
-                rightDisplayTabs: this.state.defaultRightDisplayTabs,
-
-                displayUserNotLoggedIn: false,
-                displayLogin: false,
-                displayLoginStatus: false,
-                displayRegistration: false,
-                displayInfo: false,
-              })
-            }
-        }
-
-        else if ( id==="5") { //website info
-            this.setState({ 
-              displayInfo: true,
-
-              rightDisplayTabs: this.state.defaultRightDisplayTabs,
-
-              displayProfileInfo: false,
-              displayUserNotLoggedIn: false,
-              displayLogin: false,
-              displayLoginStatus: false,
-              displayRegistration: false,
-
-
-            });
-        }
-
-        else if (id==="sbt-1") { 
-          this.setState({getter: "by league"}); 
-          newTabs = this.state.leagueTabs; 
-        }
-        else if (id==="sbt-2") { 
-          this.setState({getter: "by teams"}); 
-          newTabs = this.state.leagueTabs; 
-        }
-
-        // if clicked on a tab displaying a league
-        else if (id==="premier" || id==="champions" || id==="bundesliga" || id==="serie-a" || id==="la-liga") { 
-          this.getLeagueInfo(id); 
-        }
-        // getting fixtures by clicking on a team
-        else if ((typeof id)==='number') { 
-
-          this.setState({
-            findFutureGames: true,
-            displayDeleteButton: false,
-            displayLoginStatus: false,
-            displayLogin: false,
-            displayRegistration: false,
-            displayProfileInfo: false,
-            displayInfo: false
-          }, ()=> this.getFixturesByTeam(id) ); 
-          
-        } //if clicked on a team, get fixtures for that team
-
-
+      // find future games
+      else if (id==="2") {
         this.setState({
-            display: newDisplay,
-            tabsToDisplay: newTabs
-        }) 
+          tabsToDisplay: this.state.findGamesTabs,
+          findFutureEvents: true
+        });
+      }
+
+      //find past games
+      else if (id==="3") {
+        this.setState({
+          tabsToDisplay: this.state.findGamesTabs,
+          findFutureEvents: false,
+        })
+      }
+
+      // profile info
+      else if (id==="4") {
+        if (this.state.isLoggedIn===true) {
+          this.setState({
+            displayHeaderData:  {topLeft: "Profile ingo", topRight: "", bottomLeft: "", bottomRight: ""},
+            displayType: "profile-info"
+          })
+        }
+        else {
+          this.setState({
+            displayHeaderData:  {topLeft: "", topRight: "", bottomLeft: "", bottomRight: ""},
+            displayType: 'user-not-logged=in'
+          }); 
+        }
+      }
+
+      // info
+      else if (id==="5") {
+        this.setState({
+          displayHeaderData:  {topLeft: "About Sports Manager", topRight: "", bottomLeft: "", bottomRight: ""},
+          displayType: "info"
+        });
+      }
+
+      else if (id==="back") {
+        if (this.state.isLoggedIn===true) {
+          this.setState({
+            tabsToDisplay: this.state.defaultTabs,
+            displayType: "your-games"
+
+          })
+        }
+        else {
+          this.setState({
+            tabsToDisplay: this.state.defaultTabs,
+            displayType: "login-message-gui"
+          })
+        }
+
+      }
+
+      else if (id==="sbt-1") {
+        this.setState({
+          tabsToDisplay: this.state.leagueTabs,
+          findingEventsByLeague: true
+        });
+      }
+
+      else if (id==="sbt-2") {
+        this.setState({
+          tabsToDisplay: this.state.leagueTabs,
+          findingEventsByLeague: false
+        })
+      }
+
+      //clicked on a league
+      else if  (id==="premier" || id==="champions" || id==="bundesliga" || id==="serie-a" || id==="la-liga") {
+        this.getLeagueInfo(id);
+      }
+
+      // getting fixtures by team
+      else if ((typeof id) ==="number" ) {
+        console.log("getting fixtures by team");
+          this.getFixturesByTeam(id, optData);
+      }
+
     }
 
     displayScheduledGames = () => {
       if (this.state.isLoggedIn===true) {
         this.setState({
-          displayLoginStatus: false, 
-          displayLogin: false, 
-          displayRegistration: false, 
-
+          
           rightDisplayTabs: this.state.userGames, 
           displayHeaderData: { name: "Welcome "+this.state.userData.firstName, subHeader: "Your games"},
-          displayDeleteButton: true,
-          findFutureGames: false,
+          displayType: "your-games"
+  
         });
       }
     }
@@ -326,25 +317,25 @@ class MainBody extends Component {
             season=season[0];
             season = season.start+' to '+season.end;
 
-            this.setState({displayHeaderData: {name: name, region: region, season: season} });
+            this.setState({
+              displayHeaderData: {topLeft: name, topRight: region, bottomLeft: "",bottomRight: season},
+           });
         }).catch(function (error) {
             console.error(error);
         });
 
         // gettings fixtures in league
-        if (this.state.getter==="by league") {
+        if (this.state.findingEventsByLeague===true) {
           this.setState({
-            findFutureGames: true,
-            displayDeleteButton: false,
-            displayLoginStatus: false,
-            displayLogin: false,
-            displayRegistration: false,
-            displayProfileInfo: false,
-            displayInfo: false
+            displayType: "find-games"
           }, this.getFixturesByLeague(leagueId)); 
         } 
         // getting teams in league
-        else if (this.state.getter==="by teams"){ this.getTeamsByLeague(leagueId) }
+        else {
+          this.setState({
+            displayType: "find-games"
+          }, () => this.getTeamsByLeague(leagueId));
+        }
 
             
       }
@@ -433,7 +424,7 @@ class MainBody extends Component {
             this.setState({
               rightDisplayTabs:newFixtures,
               displayDeleteButton: false,
-              displayHeaderData: {name: teamName, region: "", season: ""}
+              displayHeaderData: {topLeft: teamName, region: "", season: ""}
             });
 
             
@@ -481,8 +472,7 @@ class MainBody extends Component {
               };
               newFixtures.push(f);
             });   
-
-            this.setState({rightDisplayTabs: newFixtures, displayDeleteButton: false});
+            this.setState({rightDisplayTabs: newFixtures});
       
           })
           .catch(function (error) {
@@ -491,6 +481,13 @@ class MainBody extends Component {
       }
 
       addGame = (event) => {
+        if (this.state.isLoggedIn===false) {
+          this.setState({
+            displayHeaderData: {topLeft: "Events Manager", topRight: "", bottomLeft: "", bottomRight: ""},
+            displayType: "login-message-gui"
+          })
+        }
+
         let gameAdded = false;
         this.state.userGames.forEach(userEvent => { 
           if ( event.id === userEvent.id ) gameAdded=true;
@@ -500,9 +497,7 @@ class MainBody extends Component {
           alert("Game already added! ");
         }
 
-        else if (this.state.isLoggedIn===false) {
-          this.displayUserNotLoggedIn();
-        }
+        
         else { //adding game
           /*id
           xhome 
@@ -562,26 +557,19 @@ class MainBody extends Component {
       handleLoginRegistrationClick = (buttonType) => {
         if (buttonType==="login") {
           this.setState({
-            displayLogin: true,
-            displayLoginStatus: false,
-            displayHeaderData: {name: "Login", region: "", season: ""}
+            displayType: "login-gui"
           })
 
         }
         else if (buttonType==="registration") {
           this.setState({
-            displayLoginStatus: false,
-            displayRegistration: true,
-            displayHeaderData: {name: "Registration", region: "", season: ""}
+            displayType: "registration-gui"
           });
 
         }
         else if (buttonType==="back") {
           this.setState({
-            displayLoginStatus: true,
-            displayRegistration: false,
-            displayLogin: false,
-            displayHeaderData: {name: "", region: "", season: ""}
+            displayType: "login-message-gui"
           });
           
         }

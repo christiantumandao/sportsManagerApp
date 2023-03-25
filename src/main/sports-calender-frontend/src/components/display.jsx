@@ -17,14 +17,15 @@ class Display extends Component {
             /** of class flex-container-display */
             <React.Fragment>
 
+                {/** Top header */}
                 <div class="flex-item-display flex-display-header">
-                    <div class="display-header-left">{this.props.displayHeaderData.name}</div>
-                    <div class="display-header-right">{this.props.displayHeaderData.region}</div>
+                    <div class="display-header-left">{this.props.displayHeader.topLeft}</div>
+                    <div class="display-header-right">{this.props.displayHeader.topRight}</div>
                 </div>
-
+                {/**  Sub header*/}
                 <div class="flex-item-display flex-display-season">
-                    <div class="left-description">{ this.props.displayHeaderData.subHeader }</div>
-                    <div class="right-description">{ this.props.displayHeaderData.season }</div>
+                    <div class="left-description">{ this.props.displayHeader.bottomRight }</div>
+                    <div class="right-description">{ this.props.displayHeader.bottomLeft }</div>
                         
                 </div>
 
@@ -32,23 +33,20 @@ class Display extends Component {
                     <EventTabs 
                     fixtures = {this.props.fixtures}
 
+                    // function references
                     addGame = {this.props.addGame}
                     deleteGame = {this.props.deleteGame}
-                    displayAddButton = {this.props.displayAddButton}
-                    displayDeleteButton= { this.props.displayDeleteButton }
-                    displayScore = { this.props.displayScore}
-
-                    displayLoginStatus = {this.props.displayLoginStatus}
-                    displayLogin = {this.props.displayLogin}
-                    displayRegistration = {this.props.displayRegistration}
                     handleLoginRegistrationClick = {this.props.handleLoginRegistrationClick}
                     handleLogin = {this.props.handleLogin}
                     handleRegistration = {this.props.handleRegistration}
 
-                    displayInfo = { this.props.displayInfo }
-                    displayProfileInfo = { this.props.displayProfileInfo }
-                          userData = { this.props.userData }
-                          gameCount = {this.props.gameCount}
+                    displayType = {this.props.displayType}
+                    findFutureEvents = { this.props.findFutureEvents }
+
+                    // user info
+                    userData = { this.props.userData }
+                    gameCount = {this.props.gameCount}
+                    isLoggedIn = {this.props.isLoggedIn }
 
                     />
                 </div>

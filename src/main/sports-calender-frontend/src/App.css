@@ -224,10 +224,16 @@ width: 30vw;
   overflow-y: auto;
 }
 
+.eventTab-container {
+  background-color: green;
+  height: 50%;
+}
+
 /* each eventTab ~11vh*/
 .eventTab {
+
   flex: 0 0 auto;
-  height: 20%;
+  height: 100%;
   width: 100%;
   min-height: 20%;
   max-height: 25%;
@@ -402,12 +408,27 @@ width: 30vw;
 }
 
 .registration-gui h3 {
-  font-size: 1em;
+  font-size: .75em;
+}
+
+.registration-gui  form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 85%;
+  width: 35%;
+
+}
+
+.input-group {
+  margin-bottom: 3vh;
 }
 
 .login-register-back-button {
   background: none;
   border: none;
+  height: 15%;
   color: #DCE1E9;
   align-self: flex-start;
 
@@ -453,7 +474,7 @@ width: 30vw;
 }
 
 
-.display-info {
+.info {
   padding: 0 .5em;
 }
 

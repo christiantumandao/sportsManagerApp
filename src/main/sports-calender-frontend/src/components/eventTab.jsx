@@ -26,12 +26,12 @@ class EventTab extends Component {
                     <div class="match-up flex-item-eventTab">
                         <div>
                             <img src={this.props.homeImg} class="home-img"/>
-                            {this.props.home}
+                            {" "+this.props.home}
                         </div>
                          <div>vs</div>  
                          <div>
                             <img src={this.props.awayImg} class="away-img"></img>
-                             {this.props.away}
+                             {" "+this.props.away}
                          </div>      
                  </div>
 
@@ -69,7 +69,7 @@ class EventTab extends Component {
                         <div>{this.props.awayScore}</div>
                     </div>
 
-                    <div class="tracker">
+                    <div class={this.getClasses("tracker")}>
                         <div class="tracker-bar">
                             <p>[</p>
                             <p class="notch-1">=</p>
@@ -117,19 +117,28 @@ class EventTab extends Component {
     }
 
     getClasses = (classType) => {
+        if (classType==="score" && this.props.score===null) return "display-none";
+        
         if (classType==="addButton") {
-            if (this.props.displayAddButton === true) return "add-btn-container";
+            if (this.props.displayType==="find-games") return "add-btn-container";
             else return "display-none";
         }
         else if (classType=="deleteButton") {
-            if (this.props.displayDeleteButton ===true) return "add-btn-container delete-btn-container";
+            if (this.props.findFutureEvents ===false && this.props.displayType==="your-games") return "add-btn-container delete-btn-container";
             else return "display-none";
         }
         else if (classType==="score") {
-            if (this.props.displayScore===false) return "display-none";
+            if (this.props.findFutureEvents===true) return "display-none";
             else return "fixture-score";
-
         }
+        else if (classType==="tracker") {
+            if (this.props.displayType==="your-games") return "tracker";
+            else return "display-none";
+        }
+
+        
+
+        
     }
 }
  

@@ -1,15 +1,22 @@
 import React, { Component, useState } from 'react';
 import EventTab from './eventTab';
 import '../App.css';
-//props:
-// fixtures a list of objects where each object is an event
-// addGame (fnction reference)
-// deleteGame
-// displayLoginStatus
-// displayLogin
-// displayRegistration
-// handleLoginRegistrationClick
-//userData
+/*
+PROPS:
+fixtures 
+
+addGame}
+deleteGame 
+handleLoginRegistrationClick 
+handleLogin 
+handleRegistration 
+
+displayType 
+
+userData
+gameCount
+sLoggedIn 
+*/
 class EventTabs extends Component {
     constructor(props) {
         super(props);
@@ -27,9 +34,9 @@ class EventTabs extends Component {
         return (
             <React.Fragment>
 
-                {
+                { //eventTab
                     this.props.fixtures.map( event => (
-                        <div key={ this.getKey() } class="eventTab">
+                        <div key={ this.getKey() } class={ this.getClasses("eventTab")}>
                             <EventTab 
                             id = {event.id}
                             home ={event.home}
@@ -41,22 +48,28 @@ class EventTabs extends Component {
                             homeImg = {event.homeImg}
                             awayImg = {event.awayImg}
                             time = {event.time}
-                            addGame = {this.props.addGame}
-                            deleteGame = {this.props.deleteGame}
                             homeScore = {event.homeScore}
                             awayScore = {event.awayScore}
+
+                            addGame = {this.props.addGame}
+                            deleteGame = {this.props.deleteGame}
+
+                            isLoggedIn = {this.props.isLoggedIn}
                             displayAddButton={this.props.displayAddButton}
                             displayDeleteButton= { this.props.displayDeleteButton }
                             displayScore = { this.props.displayScore}
+                            findFutureEvents = { this.props.findFutureEvents }
+                            displayType = { this.props.displayType }
 
                             />
                         </div>
 
                     ))
                 }
+ 
 
                 {/**display login/registration message */}
-                <div class={this.getClasses("message")}>
+                <div class={this.getClasses("login-message-gui")}>
                     <h1>You are not logged in!</h1>
                     <div class="login-buttons">
                         <button onClick = { ()=> this.props.handleLoginRegistrationClick("login") }>
@@ -69,7 +82,7 @@ class EventTabs extends Component {
                 </div>
 
                 {/**login-gui */}
-                <div class={this.getClasses("login")}>
+                <div class={this.getClasses("login-gui")}>
                 <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
                 <form onSubmit = { this.handleLoginSubmit} >
                     <label>
@@ -104,8 +117,10 @@ class EventTabs extends Component {
                 </div>
 
                 {/** registration-gui */}
-                <div class= {this.getClasses("registration")}>
+                <div class= {this.getClasses("registration-gui")}>
+
                     <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
+                
                     <form onSubmit = { this.handleRegistrationSubmit} >
                         <label>
                             Username:
@@ -146,7 +161,7 @@ class EventTabs extends Component {
                             <label>
                             Last Name: 
                         </label>
-                            <div class="input-group">
+                            <div class="input-group input-group-last">
                                 <input type="text" 
                                             id="lastName"
                                             name="lastName"
@@ -157,10 +172,12 @@ class EventTabs extends Component {
                             </div>
                             <input type="submit" value="Submit" class="submit-btn"></input>
                     </form>
+
                 </div>
 
                 {/** profile info display */}
                 <div class= { this.getClasses("profile-info")}>
+
                     <div class="profile-info-item">
                         <div class="profile-settings">
                             <h2>Profile Settings</h2>
@@ -180,56 +197,58 @@ class EventTabs extends Component {
                                 <div>Total minutes not watched</div>
                             </div>
                         </div>
+
                     </div>
                     
                 </div>
 
                 {/** website info display */}
-                <div class= { this.getClasses("website-info")}>
-                    <div class="app-summary">
-                        <h3>Sports Events Manager</h3>
-                        <p>Is a web application that searches for future and past soccer/football games.</p>
-                        <p>Given a user registers and logs in, will offer to schedule games and track watched portion(s) of games.</p>
-                    </div>
-                    <h3>Leagues offered:</h3>
-                    <div class="leagues-offered">
-                            <ul class="left-list">
-                                <li>Premier League</li>
-                                <li>Champions League</li>
-                                <li>Bundesliga</li>
-                            </ul>
-                            <ul class="right-list">
-                                <li>Serie A</li>
-                                <li>La Liga</li>
-                            </ul>
-                    </div>
-                    <div class="tech-stack-summary">
-                        <h3>Tech stack:</h3>
-                        <ul>
-                            <li>Frontend: 
-                                <ul>
-                                    <li>ReactJS</li>
-                                    <li>Axios</li>
-                                </ul>
-                            </li>
-                            <li>Backend:
-                                <ul>
-                                    <li>Java Spring Boot MVC</li>
-                                    <li>ORM: Spring Data JPA</li>
-                                </ul>
-                            </li>
-                            <li>Database/Cloud 
-                                <ul>
-                                    <li>AWS RDS (mySQL engine)</li>
-                                    <li>AWS Elastic Beanstalk</li>
-                                </ul>
-                            </li>
-                            
-                        </ul>
-                    </div>
-                    <div>
+                <div class= { this.getClasses("info")}>
 
+                        <div class="app-summary">
+                            <h3>Sports Events Manager</h3>
+                            <p>Is a web application that searches for future and past soccer/football games.</p>
+                            <p>Given a user registers and logs in, will offer to schedule games and track watched portion(s) of games.</p>
+                        </div>
+                        <h3>Leagues offered:</h3>
+                        <div class="leagues-offered">
+                                <ul class="left-list">
+                                    <li>Premier League</li>
+                                    <li>Champions League</li>
+                                    <li>Bundesliga</li>
+                                </ul>
+                                <ul class="right-list">
+                                    <li>Serie A</li>
+                                    <li>La Liga</li>
+                                </ul>
+                        </div>
+                        <div class="tech-stack-summary">
+                            <h3>Tech stack:</h3>
+                            <ul>
+                                <li>Frontend: 
+                                    <ul>
+                                        <li>ReactJS</li>
+                                        <li>Axios</li>
+                                    </ul>
+                                </li>
+                                <li>Backend:
+                                    <ul>
+                                        <li>Java Spring Boot MVC</li>
+                                        <li>ORM: Spring Data JPA</li>
+                                    </ul>
+                                </li>
+                                <li>Database/Cloud 
+                                    <ul>
+                                        <li>AWS RDS (mySQL engine)</li>
+                                        <li>AWS Elastic Beanstalk</li>
+                                    </ul>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div>
                     </div>
+
                 </div>
             </React.Fragment>
         );
@@ -241,30 +260,12 @@ class EventTabs extends Component {
 
     getClasses(divType) {
 
-        if (divType==="message") {
-            if (this.props.displayLoginStatus===false) return "display-none";
-            else return "login-message-gui";
-        }
 
-        if (divType==="login") {
-            if (this.props.displayLogin===false) return "display-none";
-            else return "login-gui";
-        }
-
-        if (divType==="registration") {
-            if (this.props.displayRegistration===false) return "display-none";
-            else return "registration-gui";
-        }
-
-        if (divType==="profile-info") {
-            if (this.props.displayProfileInfo===true)  return "profile-info";
-            else return "display-none";
-        }
-
-        if (divType==="website-info") {
-            if (this.props.displayInfo===true)  return "display-info";
-            else return "display-none";
-        }
+        if (this.props.displayType === "find-games" && divType==="eventTab") return divType;
+        if (this.props.displayType === "your-games" && divType==="eventTab") return divType;
+        if (divType !== this.props.displayType) return "display-none";
+        else return divType;
+      
     }
 
     handleChange = (event) => {
