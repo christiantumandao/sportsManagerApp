@@ -53,6 +53,8 @@ class EventTabs extends Component {
 
                             addGame = {this.props.addGame}
                             deleteGame = {this.props.deleteGame}
+                            handleTrackerButtonClick = { this.props.handleTrackerButtonClick }
+                            watched = { this.props.watched }
 
                             isLoggedIn = {this.props.isLoggedIn}
                             displayAddButton={this.props.displayAddButton}

@@ -70,22 +70,16 @@ class EventTab extends Component {
                     </div>
 
                     <div class={this.getClasses("tracker")}>
-                        <div class="tracker-bar">
-                            <p>[</p>
-                            <p class="notch-1">=</p>
-                            <p class="notch-2">=</p>
-                            <p class="notch-3">=</p>
-                            <p class="notch-4">=</p>
-                            <p class="notch-5">=</p>
-                            <p class="notch-6">=</p>
-                            <p class="notch-7">=</p>
-                            <p class="notch-8">=</p>
-                            <p class="notch-9">=</p>
-                            <p class="notch-10">=</p>
-                            <p >]</p>
+                        <div class="tracker-title">
+                            <p>Watched:</p>
+                        </div>
+                        <div class="watched">
+                             { this.props.watched }
                         </div>
                         <div class="tracker-btn-container">
-                            <button>Tracks</button>
+                            <button onClick = {() => this.props.handleTrackerButtonClick(this.props.id) }>
+                                Change
+                            </button>
                         </div>
 
 
@@ -117,18 +111,17 @@ class EventTab extends Component {
     }
 
     getClasses = (classType) => {
-        if (classType==="score" && this.props.score===null) return "display-none";
         
         if (classType==="addButton") {
-            if (this.props.displayType==="find-games") return "add-btn-container";
+            if (this.props.displayAddButton===true) return "add-btn-container";
             else return "display-none";
         }
         else if (classType=="deleteButton") {
-            if (this.props.findFutureEvents ===false && this.props.displayType==="your-games") return "add-btn-container delete-btn-container";
+            if (this.props.displayDeleteButton ===true && this.props.displayType==="your-games") return "add-btn-container delete-btn-container";
             else return "display-none";
         }
         else if (classType==="score") {
-            if (this.props.findFutureEvents===true) return "display-none";
+            if (this.props.displayScore===false) return "display-none";
             else return "fixture-score";
         }
         else if (classType==="tracker") {

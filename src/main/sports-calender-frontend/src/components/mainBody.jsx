@@ -57,6 +57,10 @@ class MainBody extends Component {
       // GUI variables
       findingEventsByLeague: null,
       findFutureEvents: false, 
+      displayAddButton: false,
+      displayedbutton: false,
+      displayScore: false,
+      displayTracker: false,
 
        // Flags for displayHeader ==========================================================================
 
@@ -110,10 +114,14 @@ class MainBody extends Component {
                         handleLoginRegistrationClick = {this.handleLoginRegistrationClick}
                         handleRegistration = {this.handleRegistrationSubmit}
                         handleLogin = {this.handleLoginSubmit}
+                        handleTrackerButtonClick = { this.handleTrackerButtonClick }
 
                         // display body
                         displayType = { this.state.displayType }
                         findFutureEvents ={ this.state.findFutureEvents }
+                        displayAddButton = { this.state.displayAddButton }
+                        displayDeleteButton = { this.state.displayDeleteButton }
+                        displayScore = { this.state.displayScore }
                         
                         //user data
                         userData = { this.state.userData }
@@ -130,10 +138,9 @@ class MainBody extends Component {
 
       // your games
       if  (id==="1") {
+        console.log("clicked on your games");
         if (this.state.isLoggedIn===true) {
-          this.setState({
-            tabsToDisplay: this.state.defaultTabs,
-          })
+          this.displayScheduledGames();
         }
         else {
           this.setState({
@@ -146,6 +153,7 @@ class MainBody extends Component {
 
       // find future games
       else if (id==="2") {
+        console.log("clicked on find future games");
         this.setState({
           tabsToDisplay: this.state.findGamesTabs,
           findFutureEvents: true
@@ -154,6 +162,7 @@ class MainBody extends Component {
 
       //find past games
       else if (id==="3") {
+        console.log("clicked on find past games");
         this.setState({
           tabsToDisplay: this.state.findGamesTabs,
           findFutureEvents: false,
@@ -162,6 +171,7 @@ class MainBody extends Component {
 
       // profile info
       else if (id==="4") {
+        console.log("clicked on profile info");
         if (this.state.isLoggedIn===true) {
           this.setState({
             displayHeaderData:  {topLeft: "Profile ingo", topRight: "", bottomLeft: "", bottomRight: ""},
@@ -178,6 +188,7 @@ class MainBody extends Component {
 
       // info
       else if (id==="5") {
+        console.log("clicked on info")
         this.setState({
           displayHeaderData:  {topLeft: "About Sports Manager", topRight: "", bottomLeft: "", bottomRight: ""},
           displayType: "info"
@@ -185,11 +196,10 @@ class MainBody extends Component {
       }
 
       else if (id==="back") {
+        console.log("clicked back")
         if (this.state.isLoggedIn===true) {
           this.setState({
             tabsToDisplay: this.state.defaultTabs,
-            displayType: "your-games"
-
           })
         }
         else {
@@ -202,6 +212,7 @@ class MainBody extends Component {
       }
 
       else if (id==="sbt-1") {
+        console.log("searching by league")
         this.setState({
           tabsToDisplay: this.state.leagueTabs,
           findingEventsByLeague: true
@@ -209,6 +220,7 @@ class MainBody extends Component {
       }
 
       else if (id==="sbt-2") {
+        console.log("searching by teams")
         this.setState({
           tabsToDisplay: this.state.leagueTabs,
           findingEventsByLeague: false
@@ -217,7 +229,8 @@ class MainBody extends Component {
 
       //clicked on a league
       else if  (id==="premier" || id==="champions" || id==="bundesliga" || id==="serie-a" || id==="la-liga") {
-        this.getLeagueInfo(id);
+        // handleLeagueTabClick will display eventTabs if findingEventsByLeague flagged true
+        this.handleLeagueTabClick(id);
       }
 
       // getting fixtures by team
@@ -231,11 +244,14 @@ class MainBody extends Component {
     displayScheduledGames = () => {
       if (this.state.isLoggedIn===true) {
         this.setState({
-          
+          displayDeleteButton: true,
+          displayTracker: true,
+          displayAddButton: false,
+          displayScore: true,
+
           rightDisplayTabs: this.state.userGames, 
-          displayHeaderData: { name: "Welcome "+this.state.userData.firstName, subHeader: "Your games"},
+          displayHeaderData: { topLeft: "Welcome "+this.state.userData.firstName,topRight: "", bottomRight: "", bottomLeft: "Your games"},
           displayType: "your-games"
-  
         });
       }
     }
@@ -254,8 +270,8 @@ class MainBody extends Component {
     }
 
 
-    //getScheduledGames = () => {
       loadInUserData = () => {
+        // api request that returns all games for a given user
         let axios_uri = "http://localhost:8080/api/users/events/"+String(this.state.userData.id);
         axios({
         method: 'get',
@@ -274,18 +290,21 @@ class MainBody extends Component {
                 stadium: String(res.stadium),
                 location: String(res.location), 
                 date: String(res.date),
-                time: String(res.time)
+                time: String(res.time),
+                watched: res.watched
               })
                 //events.push({id:String(res.eventName), description: String(res.eventDescription)});
             })
-            this.setState({userGames: events}, () => this.displayScheduledGames() );
+            this.setState({
+              userGames: events,
+            }, () => this.displayScheduledGames() );
         })
         .catch(error => console.error("err:", error));
       
     }
 
       //api call to find available games for each region
-      getLeagueInfo = (leagueId) => {
+      handleLeagueTabClick = (leagueId) => {
 
         if (leagueId==="premier") {leagueId=39; }
         else if (leagueId==="champions") {leagueId=2; }
@@ -333,7 +352,6 @@ class MainBody extends Component {
         // getting teams in league
         else {
           this.setState({
-            displayType: "find-games"
           }, () => this.getTeamsByLeague(leagueId));
         }
 
@@ -382,9 +400,10 @@ class MainBody extends Component {
     getFixturesByTeam = (teamId, teamName) => {
         
         var api_params;
-        if (this.state.findFutureGames===true) {
+        var gettingFutureEvents = this.state.findFutureEvents;
+
+        if (this.state.findFutureEvents===true) {
           api_params = {team: teamId, season: '2022', next: '50'}; 
-          console.log("getting nEXT GAMES");
         }
         else  {
           console.log("showing past");
@@ -424,6 +443,8 @@ class MainBody extends Component {
             this.setState({
               rightDisplayTabs:newFixtures,
               displayDeleteButton: false,
+              displayAddButton: true,
+              displayScore: !gettingFutureEvents,
               displayHeaderData: {topLeft: teamName, region: "", season: ""}
             });
 
@@ -438,7 +459,7 @@ class MainBody extends Component {
         
 
         var api_params;
-        if (this.state.findFutureGames===true) api_params = {league: leagueId, season: '2022', next: '50'};
+        if (this.state.findFutureEvents===true) api_params = {league: leagueId, season: '2022', next: '50'};
         else  api_params=  {league: leagueId, season: '2022', last: '50'};
 
         const options = {
@@ -472,7 +493,13 @@ class MainBody extends Component {
               };
               newFixtures.push(f);
             });   
-            this.setState({rightDisplayTabs: newFixtures});
+            var gettingFutureEvents= this.state.findFutureEvents;
+            this.setState({
+              rightDisplayTabs: newFixtures,
+              displayAddButton: true,
+              displayDeleteButton: false,
+              displayScore: !gettingFutureEvents
+            });
       
           })
           .catch(function (error) {
@@ -481,6 +508,12 @@ class MainBody extends Component {
       }
 
       addGame = (event) => {
+
+        let gameAdded = false;
+        this.state.userGames.forEach(userEvent => { 
+          if ( event.id === userEvent.id ) gameAdded=true;
+        })
+
         if (this.state.isLoggedIn===false) {
           this.setState({
             displayHeaderData: {topLeft: "Events Manager", topRight: "", bottomLeft: "", bottomRight: ""},
@@ -488,27 +521,13 @@ class MainBody extends Component {
           })
         }
 
-        let gameAdded = false;
-        this.state.userGames.forEach(userEvent => { 
-          if ( event.id === userEvent.id ) gameAdded=true;
-        })
-
-        if (gameAdded===true) {
+        else if (gameAdded===true) {
           alert("Game already added! ");
         }
 
         
         else { //adding game
-          /*id
-          xhome 
-          xhomeImg
-          xaway
-          xawayImg
-          xdate
-          xtime
-          timezone
-          xlocation
-          xstadium */
+
             let uri ="http://localhost:8080/api/events/new-event"
             axios.post(uri, {
               id: event.id,
@@ -524,6 +543,7 @@ class MainBody extends Component {
               homeImg: event.homeImg,
               away: event.away,
               awayImg: event.awayImg,
+              watched: event.watched,
 
               uid: this.state.userData.id
             })
@@ -611,6 +631,12 @@ class MainBody extends Component {
            }
          })
          .catch(error => console.log("error: ", error));
+      }
+
+      handleTrackerButtonClick = (eventId) => {
+        this.state.userGames.forEach(event => {
+          if (event.id===eventId) return event.watched;
+        })
       }
 
 

@@ -24,8 +24,8 @@ class Display extends Component {
                 </div>
                 {/**  Sub header*/}
                 <div class="flex-item-display flex-display-season">
-                    <div class="left-description">{ this.props.displayHeader.bottomRight }</div>
-                    <div class="right-description">{ this.props.displayHeader.bottomLeft }</div>
+                    <div class="left-description">{ this.props.displayHeader.bottomLeft }</div>
+                    <div class="right-description">{ this.props.displayHeader.bottomRight }</div>
                         
                 </div>
 
@@ -41,12 +41,18 @@ class Display extends Component {
                     handleRegistration = {this.props.handleRegistration}
 
                     displayType = {this.props.displayType}
+                    //bools
                     findFutureEvents = { this.props.findFutureEvents }
+                    displayAddButton = { this.props.displayAddButton }
+                    displayDeleteButton = { this.props.displayDeleteButton }
+                    displayScore = { this.props.displayScore }
+                    handleTrackerButtonClick = { this.props.handleTrackerButtonClick }
 
                     // user info
                     userData = { this.props.userData }
                     gameCount = {this.props.gameCount}
                     isLoggedIn = {this.props.isLoggedIn }
+                    watched = { this.props.watched }
 
                     />
                 </div>
