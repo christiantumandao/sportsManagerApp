@@ -1,6 +1,7 @@
 package com.backend.sportscalendar;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api")
@@ -46,6 +49,24 @@ public class EventController {
     @DeleteMapping("events/{id}")
     public void deleteEvent(@PathVariable int id) {
         repo.deleteById(id);
+    }
+
+    // UPDATE event
+    @PutMapping(value = "events/watched/{id}")
+    public Event updateEventWatched(@PathVariable int id,
+            @RequestParam("watched") String watched) {
+
+        Event updatedEvent = null;
+        try {
+            updatedEvent = eventService.getEvent(id); // get
+            updatedEvent.setWatched(watched); // update
+            repo.save(updatedEvent); // load back into db
+            return updatedEvent;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return updatedEvent;
     }
 
 }

@@ -51,11 +51,14 @@ public class Event {
     @Column(name = "uid")
     private int uid;
 
+    @Column(name = "watched")
+    private String watched;
+
     // constructor
     public Event(String name, String trackedTimes,
             String date, String home, String homeImg,
             String away, String awayImg, String stadium,
-            String location, String time, int uid) {
+            String location, String time, int uid, String watched) {
         this.eventName = name;
         this.trackedTimes = trackedTimes;
         this.date = date;
@@ -67,6 +70,7 @@ public class Event {
         this.location = location;
         this.time = time;
         this.uid = uid;
+        this.watched = watched;
     }
 
     public int getId() {
@@ -163,6 +167,14 @@ public class Event {
 
     public void setUID(int uid) {
         this.uid = uid;
+    }
+
+    public void setWatched(String watched) {
+        this.watched = watched;
+    }
+
+    public String getWatched() {
+        return this.watched;
     }
 
 }
