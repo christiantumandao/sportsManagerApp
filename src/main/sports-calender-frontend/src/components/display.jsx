@@ -46,7 +46,7 @@ class Display extends Component {
                     displayAddButton = { this.props.displayAddButton }
                     displayDeleteButton = { this.props.displayDeleteButton }
                     displayScore = { this.props.displayScore }
-                    handleTrackerButtonClick = { this.props.handleTrackerButtonClick }
+                    handleTrackerinputClick = { this.props.handleTrackerinputClick }
 
                     // user info
                     userData = { this.props.userData }

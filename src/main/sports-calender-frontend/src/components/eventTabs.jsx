@@ -50,11 +50,11 @@ class EventTabs extends Component {
                             time = {event.time}
                             homeScore = {event.homeScore}
                             awayScore = {event.awayScore}
+                            watched = {event.watched}
 
                             addGame = {this.props.addGame}
                             deleteGame = {this.props.deleteGame}
-                            handleTrackerButtonClick = { this.props.handleTrackerButtonClick }
-                            watched = { this.props.watched }
+                            handleTrackerinputClick = { this.props.handleTrackerinputClick }
 
                             isLoggedIn = {this.props.isLoggedIn}
                             displayAddButton={this.props.displayAddButton}
@@ -85,37 +85,34 @@ class EventTabs extends Component {
 
                 {/**login-gui */}
                 <div class={this.getClasses("login-gui")}>
-                <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
-                <form onSubmit = { this.handleLoginSubmit} >
-                    <label>
-                        Username:
-                    </label>
-                        <div class="input-group">
-                            <input type="text" 
-                                        id="username"
-                                        name="username"
-                                        value={this.state.username}
-                                        onChange={this.handleChange}
-                                        class="form-control rounded" 
-                                        placeholder="Username"  />
-                        </div>
-                    <label>
-                        Password: 
-                    </label>
-                        <div class="input-group">
-                            <input type="text" 
-                                        id="password"
-                                        name="password"
-                                        value ={this.state.password}
-                                        onChange = {this.handleChange}
-                                        class="form-control rounded" 
-                                        placeholder="Password" />
-                        </div>
-                        <input type="submit" value="Submit" class="submit-btn"></input>
-                </form>
-                    
-
-
+                    <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
+                    <form onSubmit = { this.handleLoginSubmit} >
+                        <label>
+                            Username:
+                        </label>
+                            <div class="input-group">
+                                <input type="text" 
+                                            id="username"
+                                            name="username"
+                                            value={this.state.username}
+                                            onChange={this.handleChange}
+                                            class="form-control rounded" 
+                                            placeholder="Username"  />
+                            </div>
+                        <label>
+                            Password: 
+                        </label>
+                            <div class="input-group">
+                                <input type="text" 
+                                            id="password"
+                                            name="password"
+                                            value ={this.state.password}
+                                            onChange = {this.handleChange}
+                                            class="form-control rounded" 
+                                            placeholder="Password" />
+                            </div>
+                            <input type="submit" value="Submit" class="submit-btn"></input>
+                    </form>
                 </div>
 
                 {/** registration-gui */}
@@ -194,10 +191,7 @@ class EventTabs extends Component {
                             <div class="games-statistics profile-statistics-item">
                                 <div>Games Added: { this.props.gameCount}</div>
                             </div>
-                            <div class="watched-statistics profile-statistics-item">
-                                <div>Total minutes watched</div>
-                                <div>Total minutes not watched</div>
-                            </div>
+                        
                         </div>
 
                     </div>
@@ -212,6 +206,7 @@ class EventTabs extends Component {
                             <p>Is a web application that searches for future and past soccer/football games.</p>
                             <p>Given a user registers and logs in, will offer to schedule games and track watched portion(s) of games.</p>
                         </div>
+
                         <h3>Leagues offered:</h3>
                         <div class="leagues-offered">
                                 <ul class="left-list">
@@ -224,33 +219,43 @@ class EventTabs extends Component {
                                     <li>La Liga</li>
                                 </ul>
                         </div>
-                        <div class="tech-stack-summary">
-                            <h3>Tech stack:</h3>
-                            <ul>
-                                <li>Frontend: 
-                                    <ul>
-                                        <li>ReactJS</li>
-                                        <li>Axios</li>
-                                    </ul>
-                                </li>
-                                <li>Backend:
-                                    <ul>
-                                        <li>Java Spring Boot MVC</li>
-                                        <li>ORM: Spring Data JPA</li>
-                                    </ul>
-                                </li>
-                                <li>Database/Cloud 
-                                    <ul>
-                                        <li>AWS RDS (mySQL engine)</li>
-                                        <li>AWS Elastic Beanstalk</li>
-                                    </ul>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                        <div>
-                    </div>
 
+                        <div class="tech-stack-summary">
+                            <div class="tech-stack">
+                                <h3>Tech stack:</h3>
+                                <ul>
+                                    <li>Frontend: 
+                                        <ul>
+                                            <li>ReactJS</li>
+                                            <li>Axios</li>
+                                        </ul>
+                                    </li>
+                                    <li>Backend:
+                                        <ul>
+                                            <li>Java Spring Boot MVC</li>
+                                            <li>ORM: Spring Data JPA</li>
+                                        </ul>
+                                    </li>
+                                    <li>Database/Cloud 
+                                        <ul>
+                                            <li>AWS RDS (mySQL engine)</li>
+                                            <li>AWS Elastic Beanstalk</li>
+                                        </ul>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+
+                            <div class="future-features">
+                                <h3>Future Features:</h3>
+                                <ul>
+                                    <li>Sorting/filtering scheduled games</li>
+                                    <li>Reminders</li>
+                                    <li>Calender GUI</li>
+                                </ul>
+                            </div>
+
+                        </div>
                 </div>
             </React.Fragment>
         );

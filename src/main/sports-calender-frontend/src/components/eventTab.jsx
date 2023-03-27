@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 
 //props: 
 // key (id)
@@ -17,6 +17,21 @@ import React, { Component } from 'react';
 // displayDeleteButton
 
 class EventTab extends Component {
+    constructor(props) {
+        super(props);
+
+        let w;
+        if (this.props.watched===undefined) { w="" }
+        else{ w=this.props.watched }
+
+
+        this.state = {
+            watched: w
+        }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
     //in class eventTab
     render() { 
         return (
@@ -69,18 +84,29 @@ class EventTab extends Component {
                         <div>{this.props.awayScore}</div>
                     </div>
 
+                    {/** tracker */}
                     <div class={this.getClasses("tracker")}>
                         <div class="tracker-title">
                             <p>Watched:</p>
+                            <p> {this.props.watched}</p>
                         </div>
-                        <div class="watched">
-                             { this.props.watched }
-                        </div>
-                        <div class="tracker-btn-container">
-                            <button onClick = {() => this.props.handleTrackerButtonClick(this.props.id) }>
-                                Change
-                            </button>
-                        </div>
+                        
+
+                        <form onSubmit = { this.handleSubmit } class="tracker-btn-container">
+                            
+                                <input 
+                                type="text"
+                                value = {this.state.watched }
+                                onChange = { this.handleChange}
+
+                                placeholder="New time"
+                                class="form-control rounded change-watched"
+                                />
+                                <input type="submit" value="Set" class="submit-btn change-watched-submit" ></input>
+                           
+                            
+                        </form>
+
 
 
                     </div>
@@ -132,6 +158,16 @@ class EventTab extends Component {
         
 
         
+    }
+
+    handleChange = (event) => {
+        this.setState( { watched : event.target.value} );
+    }
+
+    handleSubmit = (event) => {
+        event.preventDefault();
+        this.props.handleTrackerinputClick(this.props.id, this.state.watched);
+
     }
 }
  

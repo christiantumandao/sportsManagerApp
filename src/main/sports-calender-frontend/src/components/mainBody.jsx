@@ -114,7 +114,7 @@ class MainBody extends Component {
                         handleLoginRegistrationClick = {this.handleLoginRegistrationClick}
                         handleRegistration = {this.handleRegistrationSubmit}
                         handleLogin = {this.handleLoginSubmit}
-                        handleTrackerButtonClick = { this.handleTrackerButtonClick }
+                        handleTrackerinputClick = { this.handleTrackerInputClick }
 
                         // display body
                         displayType = { this.state.displayType }
@@ -174,14 +174,14 @@ class MainBody extends Component {
         console.log("clicked on profile info");
         if (this.state.isLoggedIn===true) {
           this.setState({
-            displayHeaderData:  {topLeft: "Profile ingo", topRight: "", bottomLeft: "", bottomRight: ""},
+            displayHeaderData:  {topLeft: "Profile info", topRight: "", bottomLeft: "", bottomRight: ""},
             displayType: "profile-info"
           })
         }
         else {
           this.setState({
             displayHeaderData:  {topLeft: "", topRight: "", bottomLeft: "", bottomRight: ""},
-            displayType: 'user-not-logged=in'
+            displayType: 'login-message-gui'
           }); 
         }
       }
@@ -595,21 +595,32 @@ class MainBody extends Component {
         }
       }
 
-      handleRegistrationSubmit = (userData) => {
+      handleRegistrationSubmit = (_userData) => {
         console.log("Registering....");
-        console.log("Name: ", userData.firstName, userData.lastName);
-        console.log("username: ", userData.username);
-        console.log("password: ", userData.password);
+        console.log("Name: ", _userData.firstName, _userData.lastName);
+        console.log("username: ", _userData.username);
+        console.log("password: ", _userData.password);
 
         axios.post( "http://localhost:8080/api/users" ,
           {
-            firstName: userData.firstName,
-            lastName: userData.lastName,
-            username: userData.username,
-            password: userData.password
+            firstName: _userData.firstName,
+            lastName: _userData.lastName,
+            username: _userData.username,
+            password: _userData.password
           })
           .then(result => {
-            console.log("User ", userData.username," generated" );   
+            console.log("User ", _userData.username," generated" );   
+            this.setState({
+              
+                userData: {
+                  firstName:_userData.firstName, 
+                  lastName: _userData.lastName, 
+                  username: _userData.username, 
+                  id: _userData.id
+                }, 
+                isLoggedIn: true
+              }, 
+              () => { this.displayScheduledGames()})
           })
           .catch(error => console.error("err:", error));
       }
@@ -633,11 +644,33 @@ class MainBody extends Component {
          .catch(error => console.log("error: ", error));
       }
 
-      handleTrackerButtonClick = (eventId) => {
-        this.state.userGames.forEach(event => {
-          if (event.id===eventId) return event.watched;
+      handleTrackerInputClick = (eventId, newTime) => {
+
+        //update this.state.userGames
+        let newUserGames = [...this.state.userGames];
+
+        newUserGames.forEach(event => {
+          if (event.id===eventId) {
+            event.watched=newTime;
+          }
+        });
+        this.setState({userGames: newUserGames}, 
+        this.displayScheduledGames());
+        
+        //update event in DB 
+        let axios_url = "http://localhost:8080/api/events/watched/"+eventId;
+        console.log("NEW TIME: ", newTime);
+        axios.put(axios_url, null, {
+          params: {
+            watched: newTime
+          }
         })
+        .then(response => console.log("Updated DB watch time to: ", newTime))
+        .catch(error => console.log(error));
+
       }
+
+      
 
 
 }
