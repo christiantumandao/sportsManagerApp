@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import EventTab from './eventTab';
 import '../App.css';
 /*
@@ -250,8 +250,11 @@ class EventTabs extends Component {
                                 <h3>Future Features:</h3>
                                 <ul>
                                     <li>Sorting/filtering scheduled games</li>
-                                    <li>Reminders</li>
+                                    <li>Event reminders</li>
                                     <li>Calender GUI</li>
+                                    <li>Delete user</li>
+                                    <li>Log out</li>
+                                    <li>Load icon for buffer</li> 
                                 </ul>
                             </div>
 

@@ -1,7 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Display from './display';
 import Tabs from './tabs';
-import SearchBar from './searchBar';
+//import SearchBar from './searchBar';
 
 import axios from 'axios';
 
@@ -326,8 +326,8 @@ class MainBody extends Component {
         let name;
         let region;
         let season;
-        axios.request(options).
-        then(response => {
+        axios.request(options)
+        .then(response => {
             let res = response.data.response[0];
             name = res.league.name;
             if (name==="UEFA Champions League") name="Champions League";
@@ -442,6 +442,7 @@ class MainBody extends Component {
             })
             this.setState({
               rightDisplayTabs:newFixtures,
+              displayType: "find-games",
               displayDeleteButton: false,
               displayAddButton: true,
               displayScore: !gettingFutureEvents,
@@ -496,6 +497,7 @@ class MainBody extends Component {
             var gettingFutureEvents= this.state.findFutureEvents;
             this.setState({
               rightDisplayTabs: newFixtures,
+              display: "find-games",
               displayAddButton: true,
               displayDeleteButton: false,
               displayScore: !gettingFutureEvents
@@ -601,28 +603,47 @@ class MainBody extends Component {
         console.log("username: ", _userData.username);
         console.log("password: ", _userData.password);
 
-        axios.post( "http://localhost:8080/api/users" ,
-          {
-            firstName: _userData.firstName,
-            lastName: _userData.lastName,
-            username: _userData.username,
-            password: _userData.password
+        // make axios get request for all users
+        // if username _userData.username already exists, do not register
+        axios("http://localhost:8080/api/users/all-users")
+        .then(response => {
+          let res = response.data;
+          let usernameExists = false;
+         
+          res.forEach(currUser => {
+            if (currUser.username===_userData.username) {usernameExists=true; console.log("username exists!!!")}
           })
-          .then(result => {
-            console.log("User ", _userData.username," generated" );   
-            this.setState({
-              
-                userData: {
-                  firstName:_userData.firstName, 
-                  lastName: _userData.lastName, 
-                  username: _userData.username, 
-                  id: _userData.id
+
+          console.log("see if usernameExists updated: ", usernameExists);
+          if (usernameExists===true) {
+            alert("Username already exists! Please try a different one");
+          }
+          else { //username does not exist yet, will register user w/ post request
+            axios.post( "http://localhost:8080/api/users" ,
+            {
+              firstName: _userData.firstName,
+              lastName: _userData.lastName,
+              username: _userData.username,
+              password: _userData.password
+            })
+            .then(result => {
+              console.log("User ", _userData.username," generated" );   
+              this.setState({
+                
+                  userData: {
+                    firstName:_userData.firstName, 
+                    lastName: _userData.lastName, 
+                    username: _userData.username, 
+                    id: _userData.id
+                  }, 
+                  isLoggedIn: true
                 }, 
-                isLoggedIn: true
-              }, 
-              () => { this.displayScheduledGames()})
-          })
-          .catch(error => console.error("err:", error));
+                () => { this.displayScheduledGames()})
+            })
+            .catch(error => console.error("err:", error));
+          }
+        })
+        .catch(error => console.error(error));
       }
 
       handleLoginSubmit = (userData) => {

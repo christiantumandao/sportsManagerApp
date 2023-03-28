@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 
 //props: 
 // key (id)
@@ -40,12 +40,12 @@ class EventTab extends Component {
                     {/** 30% width */}
                     <div class="match-up flex-item-eventTab">
                         <div>
-                            <img src={this.props.homeImg} class="home-img"/>
+                            <img src={this.props.homeImg} alt="home logo" class="home-img"/>
                             {" "+this.props.home}
                         </div>
                          <div>vs</div>  
                          <div>
-                            <img src={this.props.awayImg} class="away-img"></img>
+                            <img src={this.props.awayImg} alt="away logo" class="away-img"></img>
                              {" "+this.props.away}
                          </div>      
                  </div>
@@ -88,7 +88,10 @@ class EventTab extends Component {
                     <div class={this.getClasses("tracker")}>
                         <div class="tracker-title">
                             <p>Watched:</p>
-                            <p> {this.props.watched}</p>
+                            
+                        </div>
+                        <div class="tracker-watched">
+                        <p> {this.props.watched}</p>
                         </div>
                         
 
@@ -99,7 +102,6 @@ class EventTab extends Component {
                                 value = {this.state.watched }
                                 onChange = { this.handleChange}
 
-                                placeholder="New time"
                                 class="form-control rounded change-watched"
                                 />
                                 <input type="submit" value="Set" class="submit-btn change-watched-submit" ></input>
@@ -142,7 +144,7 @@ class EventTab extends Component {
             if (this.props.displayAddButton===true) return "add-btn-container";
             else return "display-none";
         }
-        else if (classType=="deleteButton") {
+        else if (classType==="deleteButton") {
             if (this.props.displayDeleteButton ===true && this.props.displayType==="your-games") return "add-btn-container delete-btn-container";
             else return "display-none";
         }

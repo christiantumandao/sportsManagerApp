@@ -521,7 +521,7 @@ width: 30vw;
   justify-content: center;
   align-items: center;
   height: 100%;
-  width: 20%;
+  width: 40%;
 }
 
 .tracker-title {
@@ -529,7 +529,7 @@ width: 30vw;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 50%;
+  height: 25%;
   width: 100%;
   overflow: scroll;
 }
@@ -539,6 +539,20 @@ width: 30vw;
   font-size: 1.75vh;
 
 
+}
+
+.tracker-watched {
+  height: 25%;
+  width: 100%;
+  overflow: scroll;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.tracker-watched > p{
+  font-size: 1.75vh;
 }
 
 .tracker-btn-container {
