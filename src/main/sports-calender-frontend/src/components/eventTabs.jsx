@@ -255,6 +255,8 @@ class EventTabs extends Component {
                                     <li>Delete user</li>
                                     <li>Log out</li>
                                     <li>Load icon for buffer</li> 
+                                    <li>Time zone translation</li>
+                                    <li>Finished game flag</li>
                                 </ul>
                             </div>
 

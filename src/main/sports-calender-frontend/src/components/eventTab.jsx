@@ -69,7 +69,7 @@ class EventTab extends Component {
                         Add game</button>
                     </div>
                     
-                    {/** 30% width */}
+                    {/** delete button 30% width */}
                     <div class={this.getClasses("deleteButton")}>
                     <button class='flex-item-eventTab'
                                         onClick={() => this.props.deleteGame(
@@ -84,33 +84,29 @@ class EventTab extends Component {
                         <div>{this.props.awayScore}</div>
                     </div>
 
-                    {/** tracker */}
+                    {/** tracker  50%*/}
                     <div class={this.getClasses("tracker")}>
                         <div class="tracker-title">
                             <p>Watched:</p>
                             
                         </div>
+
                         <div class="tracker-watched">
                         <p> {this.props.watched}</p>
                         </div>
-                        
-
+                       
                         <form onSubmit = { this.handleSubmit } class="tracker-btn-container">
-                            
                                 <input 
                                 type="text"
-                                value = {this.state.watched }
+
                                 onChange = { this.handleChange}
-
-                                class="form-control rounded change-watched"
-                                />
-                                <input type="submit" value="Set" class="submit-btn change-watched-submit" ></input>
-                           
-                            
+                                placeholder = "Set time"
+                                class="form-control rounded change-watched"/>
+                                <input 
+                                type="submit" 
+                                value="Set" 
+                                class="submit-btn change-watched-submit" ></input>        
                         </form>
-
-
-
                     </div>
 
 
