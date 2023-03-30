@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
 import EventTab from './eventTab';
 import '../App.css';
-/*
-PROPS:
-fixtures 
 
-addGame}
-deleteGame 
-handleLoginRegistrationClick 
-handleLogin 
-handleRegistration 
-
-displayType 
-
-userData
-gameCount
-sLoggedIn 
-*/
 class EventTabs extends Component {
     constructor(props) {
         super(props);
@@ -36,7 +21,7 @@ class EventTabs extends Component {
 
                 { //eventTab
                     this.props.fixtures.map( event => (
-                        <div key={ this.getKey() } class={ this.getClasses("eventTab")}>
+                        <div key={ this.getKey() } className={ this.getClasses("eventTab")}>
                             <EventTab 
                             id = {event.id}
                             home ={event.home}
@@ -71,9 +56,9 @@ class EventTabs extends Component {
  
 
                 {/**display login/registration message */}
-                <div class={this.getClasses("login-message-gui")}>
+                <div className={this.getClasses("login-message-gui")}>
                     <h1>You are not logged in!</h1>
-                    <div class="login-buttons">
+                    <div className="login-buttons">
                         <button onClick = { ()=> this.props.handleLoginRegistrationClick("login") }>
                             <p>Log in</p>
                         </button>
@@ -84,111 +69,111 @@ class EventTabs extends Component {
                 </div>
 
                 {/**login-gui */}
-                <div class={this.getClasses("login-gui")}>
-                    <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
+                <div className={this.getClasses("login-gui")}>
+                    <button className="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
                     <form onSubmit = { this.handleLoginSubmit} >
                         <label>
                             Username:
                         </label>
-                            <div class="input-group">
+                            <div className="input-group">
                                 <input type="text" 
                                             id="username"
                                             name="username"
                                             value={this.state.username}
                                             onChange={this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="Username"  />
                             </div>
                         <label>
                             Password: 
                         </label>
-                            <div class="input-group">
+                            <div className="input-group">
                                 <input type="text" 
                                             id="password"
                                             name="password"
                                             value ={this.state.password}
                                             onChange = {this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="Password" />
                             </div>
-                            <input type="submit" value="Submit" class="submit-btn"></input>
+                            <input type="submit" value="Submit" className="submit-btn"></input>
                     </form>
                 </div>
 
                 {/** registration-gui */}
-                <div class= {this.getClasses("registration-gui")}>
+                <div className= {this.getClasses("registration-gui")}>
 
-                    <button class="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
+                    <button className="login-register-back-button" onClick = { () => this.props.handleLoginRegistrationClick("back")}>Back</button>
                 
                     <form onSubmit = { this.handleRegistrationSubmit} >
                         <label>
                             Username:
                         </label>
-                            <div class="input-group">
+                            <div className="input-group">
                                 <input type="text" 
                                             id="username"
                                             name="username"
                                             value={this.state.username}
                                             onChange={this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="Username"  />
                             </div>
                         <label>
                             Password: 
                         </label>
-                            <div class="input-group">
+                            <div className="input-group">
                                 <input type="text" 
                                             id="password"
                                             name="password"
                                             value ={this.state.password}
                                             onChange = {this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="Password" />
                             </div>
                             <label>
                             FirstName: 
                         </label>
-                            <div class="input-group">
+                            <div className="input-group">
                                 <input type="text" 
                                             id="firstName"
                                             name="firstName"
                                             value ={this.state.firstName}
                                             onChange = {this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="First Name" />
                             </div>
                             <label>
                             Last Name: 
                         </label>
-                            <div class="input-group input-group-last">
+                            <div className="input-group input-group-last">
                                 <input type="text" 
                                             id="lastName"
                                             name="lastName"
                                             value ={this.state.lastName}
                                             onChange = {this.handleChange}
-                                            class="form-control rounded" 
+                                            className="form-control rounded" 
                                             placeholder="Last Name" />
                             </div>
-                            <input type="submit" value="Submit" class="submit-btn"></input>
+                            <input type="submit" value="Submit" className="submit-btn"></input>
                     </form>
 
                 </div>
 
                 {/** profile info display */}
-                <div class= { this.getClasses("profile-info")}>
+                <div className= { this.getClasses("profile-info")}>
 
-                    <div class="profile-info-item">
-                        <div class="profile-settings">
+                    <div className="profile-info-item">
+                        <div className="profile-settings">
                             <h2>Profile Settings</h2>
                             <div>Username: {this.props.userData.username}</div>
                             <div>First Name: {this.props.userData.firstName}</div>
                             <div>Last Name: {this.props.userData.lastName}</div>
                         </div>
                     </div>
-                    <div class="profile-info-item">
+                    <div className="profile-info-item">
                         <h2>Profile Statistics</h2>
-                        <div class="profile-statistics">
-                            <div class="games-statistics profile-statistics-item">
+                        <div className="profile-statistics">
+                            <div className="games-statistics profile-statistics-item">
                                 <div>Games Added: { this.props.gameCount}</div>
                             </div>
                         
@@ -199,29 +184,29 @@ class EventTabs extends Component {
                 </div>
 
                 {/** website info display */}
-                <div class= { this.getClasses("info")}>
+                <div className= { this.getClasses("info")}>
 
-                        <div class="app-summary">
+                        <div className="app-summary">
                             <h3>Sports Events Manager</h3>
                             <p>Is a web application that searches for future and past soccer/football games.</p>
                             <p>Given a user registers and logs in, will offer to schedule games and track watched portion(s) of games.</p>
                         </div>
 
                         <h3>Leagues offered:</h3>
-                        <div class="leagues-offered">
-                                <ul class="left-list">
+                        <div className="leagues-offered">
+                                <ul className="left-list">
                                     <li>Premier League</li>
                                     <li>Champions League</li>
                                     <li>Bundesliga</li>
                                 </ul>
-                                <ul class="right-list">
+                                <ul className="right-list">
                                     <li>Serie A</li>
                                     <li>La Liga</li>
                                 </ul>
                         </div>
 
-                        <div class="tech-stack-summary">
-                            <div class="tech-stack">
+                        <div className="tech-stack-summary">
+                            <div className="tech-stack">
                                 <h3>Tech stack:</h3>
                                 <ul>
                                     <li>Frontend: 
@@ -246,7 +231,7 @@ class EventTabs extends Component {
                                 </ul>
                             </div>
 
-                            <div class="future-features">
+                            <div className="future-features">
                                 <h3>Future Features:</h3>
                                 <ul>
                                     <li>Sorting/filtering scheduled games</li>
@@ -261,6 +246,8 @@ class EventTabs extends Component {
                             </div>
 
                         </div>
+                        <h3>Credits:</h3>
+                        <p>Christian Tumandao</p>
                 </div>
             </React.Fragment>
         );

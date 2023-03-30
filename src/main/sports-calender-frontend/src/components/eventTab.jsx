@@ -1,21 +1,5 @@
 import React, { Component } from 'react';
 
-//props: 
-// key (id)
-//  id
-// home
-//  away
-//  date
-//time
-//  timezone
-//  location
-//  stadium    
-//home img
-//away img  
-// add game ( function reference )
-// displayAddButton
-// displayDeleteButton
-
 class EventTab extends Component {
     constructor(props) {
         super(props);
@@ -38,21 +22,21 @@ class EventTab extends Component {
             <React.Fragment>
 
                     {/** 30% width */}
-                    <div class="match-up flex-item-eventTab">
+                    <div className="match-up flex-item-eventTab">
                         <div>
-                            <img src={this.props.homeImg} alt="home logo" class="home-img"/>
+                            <img src={this.props.homeImg} alt="home logo" className="home-img"/>
                             {" "+this.props.home}
                         </div>
                          <div>vs</div>  
                          <div>
-                            <img src={this.props.awayImg} alt="away logo" class="away-img"></img>
+                            <img src={this.props.awayImg} alt="away logo" className="away-img"></img>
                              {" "+this.props.away}
                          </div>      
                  </div>
 
                     {/** 20% width */}
-                    <div class={this.getClasses("addButton")}>
-                        <button class='flex-item-eventTab'
+                    <div className={this.getClasses("addButton")}>
+                        <button className='flex-item-eventTab'
                                         onClick={() => this.props.addGame({
                                             id: this.props.id,
                                             home: this.props.home,
@@ -70,8 +54,8 @@ class EventTab extends Component {
                     </div>
                     
                     {/** delete button 30% width */}
-                    <div class={this.getClasses("deleteButton")}>
-                    <button class='flex-item-eventTab'
+                    <div className={this.getClasses("deleteButton")}>
+                    <button className='flex-item-eventTab'
                                         onClick={() => this.props.deleteGame(
                                             this.props.id
                                         )}>
@@ -79,38 +63,38 @@ class EventTab extends Component {
                     </div>
 
                                 
-                    <div class={this.getClasses("score")}>
+                    <div className={this.getClasses("score")}>
                         <div>{this.props.homeScore}</div>
                         <div>{this.props.awayScore}</div>
                     </div>
 
-                    {/** tracker  50%*/}
-                    <div class={this.getClasses("tracker")}>
-                        <div class="tracker-title">
+                    {/** tracker */}
+                    <div className={this.getClasses("tracker")}>
+                        <div className="tracker-title">
                             <p>Watched:</p>
                             
                         </div>
 
-                        <div class="tracker-watched">
+                        <div className="tracker-watched">
                         <p> {this.props.watched}</p>
                         </div>
                        
-                        <form onSubmit = { this.handleSubmit } class="tracker-btn-container">
+                        <form onSubmit = { this.handleSubmit } className="tracker-btn-container">
                                 <input 
                                 type="text"
 
                                 onChange = { this.handleChange}
                                 placeholder = "Set time"
-                                class="form-control rounded change-watched"/>
+                                className="form-control rounded change-watched"/>
                                 <input 
                                 type="submit" 
                                 value="Set" 
-                                class="submit-btn change-watched-submit" ></input>        
+                                className="submit-btn change-watched-submit" ></input>        
                         </form>
                     </div>
 
 
-                    <div class="location flex-item-eventTab">
+                    <div className="location flex-item-eventTab">
                         <div>
                         {this.props.stadium}
                         </div>
@@ -120,7 +104,7 @@ class EventTab extends Component {
                         </div>
                     </div>
 
-                    <div class="time flex-item-eventTab">
+                    <div className="time flex-item-eventTab">
                         <div>
                         {this.props.date}
                         </div>
@@ -141,7 +125,7 @@ class EventTab extends Component {
             else return "display-none";
         }
         else if (classType==="deleteButton") {
-            if (this.props.displayDeleteButton ===true && this.props.displayType==="your-games") return "add-btn-container delete-btn-container";
+            if (this.props.displayDeleteButton ===true && this.props.displayType==="your-games") return "delete-btn-container";
             else return "display-none";
         }
         else if (classType==="score") {

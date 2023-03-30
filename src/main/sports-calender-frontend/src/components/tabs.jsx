@@ -17,7 +17,7 @@ class Tabs extends Component {
             <React.Fragment>
                 {
                     this.props.tabsToDisplay.map(tab => (
-                        <div class = { this.getClasses(tab.id) } key = {tab.id}>
+                        <div className = { this.getClasses(tab.id) } key = {tab.id}>
                             <Tab 
                             key = { tab.id }
                             id = { tab.id }

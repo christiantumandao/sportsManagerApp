@@ -93,14 +93,14 @@ class MainBody extends Component {
         return (
             <React.Fragment>
 
-                <div class="flex-item-mainBody flex-item-mainBody-1 flex-container-tabs" >         
+                <div className="flex-item-mainBody flex-item-mainBody-1 flex-container-tabs" >         
                     <Tabs
                         tabsToDisplay = { this.state.tabsToDisplay } 
                         handleTabClick = { this.handleTabClick }
                      />
                 </div>
 
-                <div class="flex-item-mainBody flex-item-mainBody-2 flex-container-display">
+                <div className="flex-item-mainBody flex-item-mainBody-2 flex-container-display">
                     <Display 
 
                         displayHeader={this.state.displayHeaderData}
@@ -138,7 +138,6 @@ class MainBody extends Component {
 
       // your games
       if  (id==="1") {
-        console.log("clicked on your games");
         if (this.state.isLoggedIn===true) {
           this.displayScheduledGames();
         }
@@ -153,7 +152,6 @@ class MainBody extends Component {
 
       // find future games
       else if (id==="2") {
-        console.log("clicked on find future games");
         this.setState({
           tabsToDisplay: this.state.findGamesTabs,
           findFutureEvents: true
@@ -162,7 +160,6 @@ class MainBody extends Component {
 
       //find past games
       else if (id==="3") {
-        console.log("clicked on find past games");
         this.setState({
           tabsToDisplay: this.state.findGamesTabs,
           findFutureEvents: false,
@@ -171,7 +168,6 @@ class MainBody extends Component {
 
       // profile info
       else if (id==="4") {
-        console.log("clicked on profile info");
         if (this.state.isLoggedIn===true) {
           this.setState({
             displayHeaderData:  {topLeft: "Profile info", topRight: "", bottomLeft: "", bottomRight: ""},
@@ -188,7 +184,6 @@ class MainBody extends Component {
 
       // info
       else if (id==="5") {
-        console.log("clicked on info")
         this.setState({
           displayHeaderData:  {topLeft: "About Sports Manager", topRight: "", bottomLeft: "", bottomRight: ""},
           displayType: "info"
@@ -196,7 +191,6 @@ class MainBody extends Component {
       }
 
       else if (id==="back") {
-        console.log("clicked back")
         if (this.state.isLoggedIn===true) {
           this.setState({
             tabsToDisplay: this.state.defaultTabs,
@@ -212,7 +206,6 @@ class MainBody extends Component {
       }
 
       else if (id==="sbt-1") {
-        console.log("searching by league")
         this.setState({
           tabsToDisplay: this.state.leagueTabs,
           findingEventsByLeague: true
@@ -220,7 +213,6 @@ class MainBody extends Component {
       }
 
       else if (id==="sbt-2") {
-        console.log("searching by teams")
         this.setState({
           tabsToDisplay: this.state.leagueTabs,
           findingEventsByLeague: false
@@ -235,7 +227,6 @@ class MainBody extends Component {
 
       // getting fixtures by team
       else if ((typeof id) ==="number" ) {
-        console.log("getting fixtures by team");
           this.getFixturesByTeam(id, optData);
       }
 
@@ -272,7 +263,7 @@ class MainBody extends Component {
 
       loadInUserData = () => {
         // api request that returns all games for a given user
-        let axios_uri = "http://localhost:8080/api/users/events/"+String(this.state.userData.id);
+        let axios_uri = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/events/"+String(this.state.userData.id);
         axios({
         method: 'get',
         url: axios_uri
@@ -406,7 +397,6 @@ class MainBody extends Component {
           api_params = {team: teamId, season: '2022', next: '50'}; 
         }
         else  {
-          console.log("showing past");
           api_params=  {team: teamId, season: '2022', last: '50'}
         }
 
@@ -530,7 +520,7 @@ class MainBody extends Component {
         
         else { //adding game
 
-            let uri ="http://localhost:8080/api/events/new-event"
+            let uri ="http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/new-event"
             axios.post(uri, {
               id: event.id,
               eventName: event.home+" vs "+event.away,
@@ -553,19 +543,16 @@ class MainBody extends Component {
               let newUserGames = [...this.state.userGames];
               newUserGames.push(event);
               this.setState({ userGames: newUserGames}); // have to callback? bc of asynchronous functionality of setstate
-              console.log("event", event.id, "added");
             })
             .catch(error => console.log("error", error))
         }
       }
 
       deleteGame = (id) => {
-        console.log("deleting event ",id);
 
-        let axios_uri = "http://localhost:8080/api/events/"+String(id);
+        let axios_uri = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/"+String(id);
         axios.delete(axios_uri)
         .then(response => {
-          console.log("event deleted");
           let newUserGames = [...this.state.userGames];
           newUserGames.forEach((game, index, arr) => { 
             if (game.id === id) arr.splice(index, 1);
@@ -598,28 +585,22 @@ class MainBody extends Component {
       }
 
       handleRegistrationSubmit = (_userData) => {
-        console.log("Registering....");
-        console.log("Name: ", _userData.firstName, _userData.lastName);
-        console.log("username: ", _userData.username);
-        console.log("password: ", _userData.password);
-
         // make axios get request for all users
         // if username _userData.username already exists, do not register
-        axios("http://localhost:8080/api/users/all-users")
+        axios("http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/all-users")
         .then(response => {
           let res = response.data;
           let usernameExists = false;
          
           res.forEach(currUser => {
-            if (currUser.username===_userData.username) {usernameExists=true; console.log("username exists!!!")}
+            if (currUser.username===_userData.username) {usernameExists=true}
           })
 
-          console.log("see if usernameExists updated: ", usernameExists);
           if (usernameExists===true) {
             alert("Username already exists! Please try a different one");
           }
           else { //username does not exist yet, will register user w/ post request
-            axios.post( "http://localhost:8080/api/users" ,
+            axios.post( "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users" ,
             {
               firstName: _userData.firstName,
               lastName: _userData.lastName,
@@ -627,7 +608,6 @@ class MainBody extends Component {
               password: _userData.password
             })
             .then(result => {
-              console.log("User ", _userData.username," generated" );   
               this.setState({
                 
                   userData: {
@@ -647,13 +627,12 @@ class MainBody extends Component {
       }
 
       handleLoginSubmit = (userData) => {
-        console.log("logging in as", userData.username,"...");
 
          //getting all users and filtering JSON for right users
-         axios.get("http://localhost:8080/api/users/all-users")
+         axios.get("http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/all-users")
          .then(response => {
            let user = response.data.filter(u => u.username===userData.username && u.password===userData.password);
-           if (user.length===0) {console.log("log in failed"); alert("login failed");}
+           if (user.length===0) {alert("login failed");}
            else{
               user = user[0];
                this.setState(
@@ -679,8 +658,7 @@ class MainBody extends Component {
         this.displayScheduledGames());
         
         //update event in DB 
-        let axios_url = "http://localhost:8080/api/events/watched/"+eventId;
-        console.log("NEW TIME: ", newTime);
+        let axios_url = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/watched/"+eventId;
         axios.put(axios_url, null, {
           params: {
             watched: newTime

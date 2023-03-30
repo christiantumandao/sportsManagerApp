@@ -15,12 +15,12 @@ import MainBody from './components/mainBody';
 function App() {
 
   return (
-    <div className="App" class="flex-container-html">
+    <div className="App flex-container-html">
           
-        <div class="flex-item-html flex-item-html-1">
+        <div className="flex-item-html flex-item-html-1">
         <h1>Sporting Events Manager</h1>
         </div>
-        <div class="flex-item-html flex-item-html-2 flex-container-mainBody">
+        <div className="flex-item-html flex-item-html-2 flex-container-mainBody">
           <MainBody />
         </div>
 

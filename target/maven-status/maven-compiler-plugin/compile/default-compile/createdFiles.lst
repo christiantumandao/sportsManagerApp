@@ -1,0 +1,10 @@
+com/backend/sportscalendar/Event.class
+com/backend/sportscalendar/EventRepository.class
+com/backend/sportscalendar/appuser/UserService.class
+com/backend/sportscalendar/EventController.class
+com/backend/sportscalendar/appuser/UserRepository.class
+com/backend/sportscalendar/SportsCalendarApplication$1.class
+com/backend/sportscalendar/appuser/AppUser.class
+com/backend/sportscalendar/appuser/UserController.class
+com/backend/sportscalendar/EventService.class
+com/backend/sportscalendar/SportsCalendarApplication.class

@@ -13,7 +13,7 @@ import React, { Component } from 'react';
 class Tab extends Component {
     render() { 
         return (
-                <button class="left-tab-button" onClick = { () => this.props.handleTabClick(this.props.id, this.props.description) }
+                <button className="left-tab-button" onClick = { () => this.props.handleTabClick(this.props.id, this.props.description) }
                 >
                     <img src={this.props.logo}></img>
                     {this.props.description} {this.props.code} 

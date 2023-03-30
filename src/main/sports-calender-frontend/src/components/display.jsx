@@ -18,18 +18,18 @@ class Display extends Component {
             <React.Fragment>
 
                 {/** Top header */}
-                <div class="flex-item-display flex-display-header">
-                    <div class="display-header-left">{this.props.displayHeader.topLeft}</div>
-                    <div class="display-header-right">{this.props.displayHeader.topRight}</div>
+                <div className="flex-item-display flex-display-header">
+                    <div className="display-header-left">{this.props.displayHeader.topLeft}</div>
+                    <div className="display-header-right">{this.props.displayHeader.topRight}</div>
                 </div>
                 {/**  Sub header*/}
-                <div class="flex-item-display flex-display-season">
-                    <div class="left-description">{ this.props.displayHeader.bottomLeft }</div>
-                    <div class="right-description">{ this.props.displayHeader.bottomRight }</div>
+                <div className="flex-item-display flex-display-season">
+                    <div className="left-description">{ this.props.displayHeader.bottomLeft }</div>
+                    <div className="right-description">{ this.props.displayHeader.bottomRight }</div>
                         
                 </div>
 
-                <div class="flex-item-display" id="flex-container-eventTabs"> 
+                <div className="flex-item-display" id="flex-container-eventTabs"> 
                     <EventTabs 
                     fixtures = {this.props.fixtures}
 

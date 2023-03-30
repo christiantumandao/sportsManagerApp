@@ -14,6 +14,7 @@ white color: DCE1E9
   font-family: 'Raleway', sans-serif;
   background-color: #1A2223;
 
+
 }
 
 .display-none {
@@ -82,6 +83,7 @@ width: 30vw;
   flex-direction: column;
   overflow-y: auto;
   min-height: 0px;
+  scrollbar-color: dark;
 }
 
 .tab:hover {
@@ -167,7 +169,6 @@ width: 30vw;
   align-items: center;
   justify-content: left;
   padding: .25em;
-  overflow:scroll;
 } 
 .display-header-right {
   width: 25%;
@@ -239,6 +240,7 @@ width: 30vw;
 
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
 
 }
 
@@ -257,7 +259,7 @@ width: 30vw;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  overflow: scroll;
+  overflow: visible;
 }
 
 .home-img {
@@ -288,11 +290,25 @@ width: 30vw;
   text-align: center;
   color: #A69658;
   border: none;
+  font-size: 1.5vh;
+
+ 
+}
+
+.delete-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 25%;
 }
 
 .delete-btn-container > button {
   color: red;
   text-align: center;
+  border: none;
+  font-size: 1vh;
+
 }
 
 .fixture-score {
@@ -313,7 +329,7 @@ width: 30vw;
   padding: 0;
   text-align: right;
   padding-right: 1em;
-  overflow: scroll;
+  overflow: visible;
   font-size: 1.2vh;
 
   display: flex;
@@ -334,7 +350,7 @@ width: 30vw;
   flex-direction: column;
   align-items:flex-start ;
 
-  overflow: scroll;
+  overflow: visible;
 }
 
 .login-message-gui {
@@ -344,6 +360,7 @@ width: 30vw;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .login-buttons {
@@ -545,7 +562,7 @@ width: 30vw;
 .tracker-watched {
   height: 30%;
   width: 100%;
-  overflow: scroll;
+  overflow: visible;
 
   display: flex;
   justify-content: flex-start;
@@ -593,15 +610,168 @@ width: 30vw;
 }
 
 @media (max-width: 600px) {
-  .tracker-btn-container > .change-watched {
 
+  .tab > button{
+    font-size: 2vh;
+  }
+
+  .eventTab {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    width: 100%;
+    height: 25%;
+  }
+
+  .eventTab > .tracker {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 50%;
+    height: 100%;
+
+  }
+
+  .tracker > .tracker-title {
+    height: 30%;
+  }
+
+  .tracker > .tracker-watched {
+    height: 30%;
+  }
+
+  .tracker > .tracker-btn-container {
+    height: 30%;
+  }
+
+  .tracker p {
+    font-size: 1vh;
+  }
+  .tracker-btn-container {
+  }
+  .tracker-btn-container > .change-watched {
+    width: 60%;
+    height: 75%;
+    margin-right: auto;
   }
 
   .tracker-btn-container > .change-watched-submit {
+    font-size: 1vh;
+    width: 20%;
+    margin-right: auto;
+    
+  }
+
+  .eventTab > .match-up {
+    width: 25%;
+  }
+
+  .match-up > div{
+    font-size: 1vh;
+  }
+
+  .match-up img {
+    height: 1.5vh;
+  }
+
+  .eventTab > .add-btn-container {
+    width: 20%;
+    margin-right: auto;
+
+    margin: auto;
+  }
+
+  .add-btn-container > button {
+    font-size: 1vh;
+    margin-left: auto;
 
   }
 
-  event-tab > .match-up {
+  .eventTab > .delete-btn-container {
+    width: 20%;
+    font-size: 1vh;
+    margin-left: auto;
+    
+    height: 100%;
+  }
+
+  .eventTab > .fixture-score {
+    width: 25%;
+    font-size: 2vw;
+  }
+
+  .delete-btn-container > button {
+    width: 100%;
+    padding-left: 2vw;
 
   }
+
+  .eventTab > .location {
+    display: none;
+  }
+
+  
+
+  .eventTab > .time {
+    font-size: 1vh;
+    margin-left: auto;
+    margin: 0 1vw;
+    width: 20%;
+  }
+
+
+
+  .login-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+
+  }
+
+  .display-header-left {
+    font-size: 1.5vh;
+  }
+
+  .display-header-right {
+    font-size: 1vh;
+  }
+
+  .left-description {
+    font-size: 1.5vh;
+  }
+
+  .right-description {
+    font-size: 1vh;
+  }
+
+  .info h3 {
+    font-size: 4vw;
+  }
+  .info p {
+    font-size: 2vw;
+  }
+  .info li {
+    font-size: 2vw;
+  }
+
+  .tech-stack-summary {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tech-stack {
+    width: 100%;
+  }
+
+  .future-features {
+    width: 100%;
+  }
+
+
+
 }
