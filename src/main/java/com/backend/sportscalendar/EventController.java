@@ -1,7 +1,6 @@
 package com.backend.sportscalendar;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://sportingeventsmanager-env.eba-r3bu67zm.us-east-2.elasticbeanstalk.com/")
+@CrossOrigin("http://sportseventmanager.s3-website.us-east-2.amazonaws.com/")
 public class EventController {
 
     @Autowired

@@ -473,9 +473,6 @@ width: 30vw;
   height: 50%;
 }
 
-.profile-settings {
-
-}
 
 .profile-statistics {
     display: flex;
@@ -492,9 +489,6 @@ width: 30vw;
   padding: 0 .5em;
 }
 
-.app-summary {
-
-}
 
 .app-summary > h1 {
   text-align: left;
@@ -503,7 +497,8 @@ width: 30vw;
 .leagues-offered {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: center;
+    padding-right: 10vw;
 }
 
 .left-list {
@@ -651,8 +646,7 @@ width: 30vw;
   .tracker p {
     font-size: 1vh;
   }
-  .tracker-btn-container {
-  }
+
   .tracker-btn-container > .change-watched {
     width: 60%;
     height: 75%;

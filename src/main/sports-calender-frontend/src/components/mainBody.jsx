@@ -9,6 +9,9 @@ class MainBody extends Component {
 
     state = {  
 
+        backend_url: "http://soccereventmanager-env.eba-xvkphpct.us-east-2.elasticbeanstalk.com/",
+       // backend_url: "http://localhost:8080/",
+
         tabsToDisplay: [
             {id: "1", description: "Your games"},
             {id: "2", description: "Find Games"},
@@ -263,7 +266,7 @@ class MainBody extends Component {
 
       loadInUserData = () => {
         // api request that returns all games for a given user
-        let axios_uri = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/events/"+String(this.state.userData.id);
+        let axios_uri = this.state.backend_url+"api/users/events/"+String(this.state.userData.id);
         axios({
         method: 'get',
         url: axios_uri
@@ -520,7 +523,7 @@ class MainBody extends Component {
         
         else { //adding game
 
-            let uri ="http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/new-event"
+            let uri =this.state.backend_url+"api/events/new-event";
             axios.post(uri, {
               id: event.id,
               eventName: event.home+" vs "+event.away,
@@ -550,7 +553,7 @@ class MainBody extends Component {
 
       deleteGame = (id) => {
 
-        let axios_uri = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/"+String(id);
+        let axios_uri = this.state.backend_url+"api/events/"+String(id);
         axios.delete(axios_uri)
         .then(response => {
           let newUserGames = [...this.state.userGames];
@@ -587,7 +590,8 @@ class MainBody extends Component {
       handleRegistrationSubmit = (_userData) => {
         // make axios get request for all users
         // if username _userData.username already exists, do not register
-        axios("http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/all-users")
+        let axios_url = this.state.backend_url+"api/users/all-users";
+        axios(axios_url)
         .then(response => {
           let res = response.data;
           let usernameExists = false;
@@ -600,7 +604,8 @@ class MainBody extends Component {
             alert("Username already exists! Please try a different one");
           }
           else { //username does not exist yet, will register user w/ post request
-            axios.post( "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users" ,
+            let axios_url = this.state.backend_url+"api/users";
+            axios.post( axios_url,
             {
               firstName: _userData.firstName,
               lastName: _userData.lastName,
@@ -629,7 +634,8 @@ class MainBody extends Component {
       handleLoginSubmit = (userData) => {
 
          //getting all users and filtering JSON for right users
-         axios.get("http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/users/all-users")
+         let axios_url = this.state.backend_url+"api/users/all-users";
+         axios.get(axios_url)
          .then(response => {
            let user = response.data.filter(u => u.username===userData.username && u.password===userData.password);
            if (user.length===0) {alert("login failed");}
@@ -658,7 +664,8 @@ class MainBody extends Component {
         this.displayScheduledGames());
         
         //update event in DB 
-        let axios_url = "http://ec2-18-217-81-104.us-east-2.compute.amazonaws.com/api/events/watched/"+eventId;
+      
+        let axios_url = this.state.backend_url+"api/events/watched/"+eventId;
         axios.put(axios_url, null, {
           params: {
             watched: newTime

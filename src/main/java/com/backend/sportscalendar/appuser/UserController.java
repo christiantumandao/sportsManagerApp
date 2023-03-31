@@ -1,8 +1,5 @@
 package com.backend.sportscalendar.appuser;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://sportingeventsmanager-env.eba-r3bu67zm.us-east-2.elasticbeanstalk.com/")
+@CrossOrigin("http://sportseventmanager.s3-website.us-east-2.amazonaws.com/")
 public class UserController {
 
     @Autowired
